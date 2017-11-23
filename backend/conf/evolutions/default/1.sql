@@ -2,19 +2,49 @@
 
 # --- !Ups
 
-CREATE TABLE Restaurant ();
+CREATE TABLE Restaurant (
+       r_name VARCHAR(50) PRIMARY KEY,
+       location VARCHAR(50),
+       owner VARCHAR(50)
+);
 
-CREATE TABLE Inventory ();
+CREATE TABLE Inventory (
+       restaurant VARCHAR(50),
+       ingredient_name VARCHAR(50),
+       quantity Integer,
+       unit VARCHAR(10)
+);
 
-CREATE TABLE Menu ();
+CREATE TABLE Menu (
+       restaurant VARCHAR(50),
+       item_name VARCHAR(50),
+       price Integer
+);
 
-CREATE TABLE Item_Recipe ();
+CREATE TABLE Ingredient (
+       restaurant VARCHAR(50),
+       item_name VARCHAR(50),
+       ingredient_name VARCHAR(50)
+);
 
-CREATE TABLE Item_Order ();
+CREATE TABLE Ticket (
+       order_num Integer,
+       name VARCHAR(50)
+);
 
-CREATE TABLE Ticket ();
+CREATE TABLE Item_Order (
+       order_num Integer,
+       item_name VARCHAR(50),
+       restaurant VARCHAR(50),
+       amount Integer
+);
 
-CREATE TABLE Portion ();
+CREATE TABLE Portion (
+       restaurant VARCHAR(50),
+       menu_item VARCHAR(50),
+       ingredient_name VARCHAR(50),
+       amount Integer
+);
 
 # --- !Downs
 
