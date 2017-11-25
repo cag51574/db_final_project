@@ -25,3 +25,9 @@ Vivek Patel
   7. Show inserts.sql file to populate the schema. [10]
   8. Discuss the system architecture and components used in the project. [10]
   9. A demonstration of the project in class. [20]
+  
+## Things our app is supposed to do:
+1. Create a restaurant
+2. Order from a restaurant
+3. View orders to your restaurant
+4. View your restaurant's inventory
