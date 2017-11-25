@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 // Our Imports
 import models.Restaurant;
 import repository.RestaurantRepository;
+import repository.InventoryRepository;
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
@@ -25,11 +26,15 @@ import repository.RestaurantRepository;
 public class HomeController extends Controller {
 
     private final RestaurantRepository restaurantRepository;
+    private final InventoryRepository inventoryRepository;
     private final HttpExecutionContext httpExecutionContext;
 
     @Inject
-    public HomeController(RestaurantRepository restaurantRepository, HttpExecutionContext httpExecutionContext) {
+    public HomeController(RestaurantRepository restaurantRepository,
+                          InventoryRepository inventoryRepository,
+                          HttpExecutionContext httpExecutionContext) {
         this.restaurantRepository = restaurantRepository;
+        this.inventoryRepository = inventoryRepository;
         this.httpExecutionContext = httpExecutionContext;
     }
 
@@ -37,6 +42,10 @@ public class HomeController extends Controller {
         return restaurantRepository.all().thenApplyAsync(list -> {
                 return ok(Json.toJson(list));
             }, httpExecutionContext.current());
+    }
+
+    public CompletionStage<Result> inventories() {
+        return inventoryRepository.all().thenApplyAsync(list -> ok(Json.toJson(list)), httpExecutionContext.current());
     }
 
     /**

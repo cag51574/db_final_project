@@ -12,7 +12,10 @@ CREATE TABLE Inventory (
        restaurant VARCHAR(50),
        ingredient_name VARCHAR(50),
        quantity Integer,
-       unit VARCHAR(10)
+       unit VARCHAR(10),
+       CONSTRAINT fk_restaurant
+                  FOREIGN KEY (restaurant)
+                  REFERENCES Restaurant(r_name)
 );
 
 CREATE TABLE Menu (
@@ -51,7 +54,7 @@ CREATE TABLE Portion (
 DROP TABLE Restaurant;
 DROP TABLE Inventory;
 DROP TABLE Menu;
-DROP TABLE Item_Recipe;
+DROP TABLE Ingredient;
 DROP TABLE Item_Order;
 DROP TABLE Ticket;
 DROP TABLE Portion;
