@@ -8,6 +8,7 @@ import play.db.ebean.EbeanConfig;
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
@@ -32,6 +33,11 @@ public class RestaurantRepository {
                     return list;
                 });
     }
+
+    public CompletionStage<List<String>> allNames() {
+        return supplyAsync(() -> ebeanServer.find(Restaurant.class).findList().stream().map(r -> r.restaurant_name).collect(Collectors.toList()), executionContext);
+    }
+
     /*
     public CompletionStage<Map<String, String>> options() {
         return supplyAsync(() -> ebeanServer.find(Company.class).orderBy("name").findList(), executionContext)

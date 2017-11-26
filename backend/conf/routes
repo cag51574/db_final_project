@@ -16,3 +16,4 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 # Our Routes will go down here.
 GET /restaurants                    controllers.HomeController.restaurants
 GET /inventories                    controllers.HomeController.inventories
+GET /restaurant_names               controllers.HomeController.restaurantNames
