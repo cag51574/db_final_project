@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-
-class App extends Component {
-
+import Header from './Header';
+import Main from './Main';
+/*class App extends Component {
   componentDidMount() {
     fetch("http://localhost:9000/restaurants")
       .then(response => {
@@ -15,10 +15,12 @@ class App extends Component {
       .catch(err => {
         console.warn('ERROR');
       });
-  }
-  render() {
-    return (
-      <div className="App">
+  }*/
+// render((
+//	<BrowserRouter>
+//		<App/>
+//	</BrowserRouter>
+      /*<div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
@@ -29,9 +31,13 @@ class App extends Component {
         <div>
         {this.state ? JSON.stringify(this.state.restaurants) : "No State Yet."}
         </div>
-      </div>
-    );
-  }
-}
+      </div>*/
+// ), document.getElementById('root'));
 
+const App = () => (
+	<div>
+		<Header />
+		<Main />
+	</div>
+)
 export default App;

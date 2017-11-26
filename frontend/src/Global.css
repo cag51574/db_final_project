@@ -1,0 +1,17 @@
+body {
+  margin: 10;
+  padding: 10;
+  font-family: sans-serif;
+}
+.DocBody {
+  margin: 40px;
+}
+.FormBox {
+  width: 500px;
+  margin-right: 20px;
+  margin-top:20px;
+  padding: 10px;
+  border: 2px solid grey;
+  display:inline;
+  float: left;
+}
