@@ -11,9 +11,13 @@ import javax.persistence.Id;
 public class Restaurant extends Model {
 
     @Id
-    public String r_name;
+    public String restaurant_name;
 
     public String location;
 
-    public String owner;
+    public String owner_first_name;
+
+    public String owner_last_name;
+
+    public String restaurant_phone;
 }

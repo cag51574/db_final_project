@@ -44,6 +44,10 @@ public class HomeController extends Controller {
             }, httpExecutionContext.current());
     }
 
+    public CompletionStage<Result> restaurantNames() {
+        return restaurantRepository.allNames().thenApplyAsync(list -> ok(Json.toJson(list)), httpExecutionContext.current());
+    }
+
     public CompletionStage<Result> inventories() {
         return inventoryRepository.all().thenApplyAsync(list -> ok(Json.toJson(list)), httpExecutionContext.current());
     }

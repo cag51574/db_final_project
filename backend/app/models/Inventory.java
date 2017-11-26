@@ -10,7 +10,7 @@ import javax.persistence.Id;
 @Entity
 public class Inventory extends Model {
 
-    public String restaurant;
+    public String restaurant_name;
 
     public String ingredient_name;
 
