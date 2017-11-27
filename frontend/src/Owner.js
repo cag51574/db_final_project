@@ -61,39 +61,39 @@ export default class Owner extends Component{
       <div className="DocBody">
         <h1>Owner Homepage</h1>
         <div className='FormRow'>
-        <div className = "FormBox">
-          <h2>Create Restaurant</h2>
-          <TextField floatingLabelText="Restaurant Name: " floatingLabelFixed={true} />
-          <br/>
-          <TextField floatingLabelText="Restaurant Location: " floatingLabelFixed={true} />
-          <br/>
-          <TextField floatingLabelText="Restaurant Phone Number: " floatingLabelFixed={true} />
-          <br/>
-          <TextField floatingLabelText="Owner's First Name: " floatingLabelFixed={true} />
-          <br/>
-          <TextField floatingLabelText="Owner's Last Name: " floatingLabelFixed={true} />
-          <br/>
-          <r_RaisedButton label="Submit" primary={true}/>
-        </div>
+          <div className = "FormBox">
+            <h2>Create Restaurant</h2>
+            <TextField floatingLabelText="Restaurant Name: " floatingLabelFixed={true} />
+            <br/>
+            <TextField floatingLabelText="Restaurant Location: " floatingLabelFixed={true} />
+            <br/>
+            <TextField floatingLabelText="Restaurant Phone Number: " floatingLabelFixed={true} />
+            <br/>
+            <TextField floatingLabelText="Owner's First Name: " floatingLabelFixed={true} />
+            <br/>
+            <TextField floatingLabelText="Owner's Last Name: " floatingLabelFixed={true} />
+            <br/>
+            <RaisedButton label="Submit" primary={true}/>
+          </div>
 
-        <div className = "FormBox">
-          <h2>Add Menu Item</h2>
+          <div className = "FormBox">
+            <h2>Add Menu Item</h2>
 
-          <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
-value={this.state.value}
-            onChange={this.handleChange}>
-            {this.state.restaurants.map(restaurant => {
-                return(<MenuItem value={restaurant.r_name} primaryText={restaurant.r_name}/>)
-            })}
-            <MenuItem value={2} primaryText="Import List 2" />
-          </SelectField>
-          <br/>
-          <TextField floatingLabelText="Menu Item: " floatingLabelFixed={true} />
-          <br/>
-          <TextField floatingLabelText="Price: " floatingLabelFixed={true} />
-          <br/>
-          <RaisedButton label="Submit" primary={true}/>
-        </div>
+            <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
+  value={this.state.value}
+              onChange={this.handleChange}>
+              {this.state.restaurants.map(restaurant => {
+                  return(<MenuItem value={restaurant.r_name} primaryText={restaurant.r_name}/>)
+              })}
+              <MenuItem value={2} primaryText="Import List 2" />
+            </SelectField>
+            <br/>
+            <TextField floatingLabelText="Menu Item: " floatingLabelFixed={true} />
+            <br/>
+            <TextField floatingLabelText="Price: " floatingLabelFixed={true} />
+            <br/>
+            <RaisedButton label="Submit" primary={true}/>
+          </div>
         </div>
 
         <div className = "FormBox">
@@ -118,6 +118,8 @@ value={this.state.value}
             <MenuItem value={1} primaryText="Import List" />
             <MenuItem value={2} primaryText="Import List 2" />
           </SelectField>
+          <br/>
+          <RaisedButton label="Submit" primary={true}/>
         </div>
 
       </div>
