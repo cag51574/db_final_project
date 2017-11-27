@@ -2,8 +2,6 @@ package controllers;
 
 import play.mvc.*;
 
-import views.html.*;
-
 // Play Imports
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
@@ -59,7 +57,7 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
-        return ok(index.render("Your new application is ready."));
+        return ok("Your new application is ready.");
     }
 
 }
