@@ -2,7 +2,6 @@ package repository;
 
 import io.ebean.Ebean;
 import io.ebean.EbeanServer;
-import models.Customer;
 import play.db.ebean.EbeanConfig;
 
 import javax.inject.Inject;

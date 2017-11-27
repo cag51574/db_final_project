@@ -2,7 +2,6 @@ package repository;
 
 import io.ebean.Ebean;
 import io.ebean.EbeanServer;
-import models.Owner;
 import play.db.ebean.EbeanConfig;
 
 import javax.inject.Inject;
@@ -26,6 +25,15 @@ public class OwnerRepository {
         this.executionContext = executionContext;
     }
 
+    /*
+    public CompletionStage<String> createRestaurant(String name, String location) {
+        return supplyAsync(() -> {
+                Restaruant r = new Restuars;
+                r.name=
+                    ebeanServer.save(r)
+            }, executionContext)
+    }
+    */
 
     public CompletionStage<List<Owner>> all() {
         return supplyAsync(() -> ebeanServer.find(Owner.class).findList(), executionContext)
