@@ -1,5 +1,6 @@
 *HERE IS THE CONFIG FILE. PUT IN IN `conf/application.conf`*
-<script src="https://gist.github.com/colinwahl/2f118bdeace58c77276d77851d030f6b.js"></script>
+https://gist.github.com/colinwahl/2f118bdeace58c77276d77851d030f6b
+
 
 This is the backend for the project.
 
