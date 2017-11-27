@@ -9,6 +9,9 @@ import java.util.concurrent.CompletionStage;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// Import Models here
+import models.Restaurant;
+
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 /**
@@ -25,15 +28,18 @@ public class OwnerRepository {
         this.executionContext = executionContext;
     }
 
-    /*
-    public CompletionStage<String> createRestaurant(String name, String location) {
+    public CompletionStage<String> createRestaurant(String restaurantName, String location, String ownerFirstName, String ownerLastName, String phoneNumber) {
         return supplyAsync(() -> {
-                Restaruant r = new Restuars;
-                r.name=
-                    ebeanServer.save(r)
-            }, executionContext)
+                Restaurant r = new Restaurant();
+                r.restaurant_name = restaurantName;
+                r.location = location;
+                r.owner_first_name = ownerFirstName;
+                r.owner_last_name = ownerLastName;
+                r.restaurant_phone = phoneNumber;
+                ebeanServer.save(r);
+                return("OK");
+            }, executionContext);
     }
-    */
 
     /*
     public CompletionStage<List<Owner>> all() {

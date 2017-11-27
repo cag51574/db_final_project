@@ -18,19 +18,19 @@ export default class Owner extends Component{
       });
   }
 
-  createRestaurant() {
-    fetch("https://localhost:9000/restaurants/new"),{
+  createRestaurant(name, location, fname, lname, phone) {
+    fetch("https://localhost:9000/new_restaurant"),{
       method:'POST',
       headers:{
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body:{
-        restaurant_name: 'Example',
-        location: 'ex location',
-        owner_fname: 'Bob',
-        owner_lname: 'Smith',
-        restaurant_phone: 7067665740
+        restaurant_name: name,
+        location: location,
+        owner_first_name: lname,
+        owner_last_name: fname,
+        restaurant_phone: phone
       }
     }
   }
