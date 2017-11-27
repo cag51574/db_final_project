@@ -8,7 +8,7 @@ import javax.persistence.Id;
 
 // Restaurant entity which is managed by Ebean.
 @Entity
-public class Restaurant extends Model {
+public class Menu extends Model {
 
     @Id
     public String restaurant_name;
