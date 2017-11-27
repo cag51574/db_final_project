@@ -2,6 +2,14 @@
 https://gist.github.com/colinwahl/2f118bdeace58c77276d77851d030f6b
 
 
+
+*To add a new route:*
+0) Figure out if the endpoint you need should go in Customer or Owner.
+1) Go to `conf/routes` and follow the other examples to point a route to a controller.
+2) Add the method you just used for the route to the appropriate controller.
+3) Follow examples to write the controller method.
+4) Follow examples to write the repository method.
+
 This is the backend for the project.
 
 
