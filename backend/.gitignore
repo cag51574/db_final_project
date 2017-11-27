@@ -6,4 +6,8 @@ target
 /.project
 /.settings
 /RUNNING_PID
+<<<<<<< HEAD
 conf/application.conf
+=======
+conf/application.conf
+>>>>>>> a99a0689ce212f9e45228b14a4b6237d6a660f6d
