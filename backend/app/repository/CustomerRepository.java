@@ -25,6 +25,7 @@ public class CustomerRepository {
         this.executionContext = executionContext;
     }
 
+    /*
 
     public CompletionStage<List<Customer>> all() {
         return supplyAsync(() -> ebeanServer.find(Customer.class).findList(), executionContext)
@@ -36,7 +37,7 @@ public class CustomerRepository {
     public CompletionStage<List<String>> allNames() {
         return supplyAsync(() -> ebeanServer.find(Customer.class).findList().stream().map(r -> r.restaurant_name).collect(Collectors.toList()), executionContext);
     }
-
+    */
     /*
     public CompletionStage<Map<String, String>> options() {
         return supplyAsync(() -> ebeanServer.find(Company.class).orderBy("name").findList(), executionContext)

@@ -35,6 +35,7 @@ public class OwnerRepository {
     }
     */
 
+    /*
     public CompletionStage<List<Owner>> all() {
         return supplyAsync(() -> ebeanServer.find(Owner.class).findList(), executionContext)
             .thenApply(list -> {
@@ -46,6 +47,7 @@ public class OwnerRepository {
         return supplyAsync(() -> ebeanServer.find(Owner.class).findList().stream().map(r -> r.restaurant_name).collect(Collectors.toList()), executionContext);
     }
 
+    */
     /*
     public CompletionStage<Map<String, String>> options() {
         return supplyAsync(() -> ebeanServer.find(Company.class).orderBy("name").findList(), executionContext)
