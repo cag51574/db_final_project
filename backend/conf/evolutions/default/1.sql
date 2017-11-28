@@ -75,9 +75,9 @@ CREATE TABLE Item_Order (
 
 # --- !Downs
 
+DROP TABLE Ingredient;
 DROP TABLE Inventory;
 DROP TABLE Ticket;
 DROP TABLE Item_Order;
 DROP TABLE Menu;
-DROP TABLE Portion;
 DROP TABLE Restaurant;

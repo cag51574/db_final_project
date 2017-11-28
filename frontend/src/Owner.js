@@ -18,20 +18,25 @@ export default class Owner extends Component{
       });
   }
 
+<<<<<<< HEAD
   //create restaurant
   createRestaurant() {
     fetch("https://localhost:9000/restaurants/new"),{
+=======
+  createRestaurant(name, location, fname, lname, phone) {
+    fetch("https://localhost:9000/new_restaurant"),{
+>>>>>>> 6cf0abc04f5aa77e43ffcd09445449e28a63520f
       method:'POST',
       headers:{
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body:{
-        restaurant_name: 'Example',
-        location: 'ex location',
-        owner_fname: 'Bob',
-        owner_lname: 'Smith',
-        restaurant_phone: 7067665740
+        restaurant_name: name,
+        location: location,
+        owner_first_name: lname,
+        owner_last_name: fname,
+        restaurant_phone: phone
       }
     }
   }
@@ -109,6 +114,7 @@ export default class Owner extends Component{
           </div>
 
           <div className = "FormBox">
+<<<<<<< HEAD
             <h2>Remove Restaurant</h2>
 
             <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
@@ -120,6 +126,24 @@ export default class Owner extends Component{
             </SelectField>
             <br/>
             <RaisedButton label="Delete" primary={true}/>
+=======
+            <h2>Add Menu Item</h2>
+
+            <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
+  value={this.state.value}
+              onChange={this.handleChange}>
+              {this.state.restaurants.map(restaurant => {
+                  return(<MenuItem value={restaurant.r_name} primaryText={restaurant.r_name}/>)
+              })}
+              <MenuItem value={2} primaryText="Import List 2" />
+            </SelectField>
+            <br/>
+            <TextField floatingLabelText="Menu Item: " floatingLabelFixed={true} />
+            <br/>
+            <TextField floatingLabelText="Price: " floatingLabelFixed={true} />
+            <br/>
+            <RaisedButton label="Submit" primary={true}/>
+>>>>>>> 6cf0abc04f5aa77e43ffcd09445449e28a63520f
           </div>
         </div>
 
@@ -143,6 +167,7 @@ export default class Owner extends Component{
           </div>
         </div>
 
+<<<<<<< HEAD
         <div className='FormRow'>
           <div className = "FormBox">
             <h2>Add Menu Item Ingredient</h2>
@@ -223,6 +248,18 @@ export default class Owner extends Component{
             <br/>
             <RaisedButton label="Delete" primary={true}/>
           </div>
+=======
+        <div className = "FormBox">
+          <h2>Edit Menu Item Recepie</h2>
+          <SelectField floatingLabelText="Restaurant Name: "
+            value={this.state.value}
+            onChange={this.handleChange}>
+            <MenuItem value={1} primaryText="Import List" />
+            <MenuItem value={2} primaryText="Import List 2" />
+          </SelectField>
+          <br/>
+          <RaisedButton label="Submit" primary={true}/>
+>>>>>>> 6cf0abc04f5aa77e43ffcd09445449e28a63520f
         </div>
 
       </div>
