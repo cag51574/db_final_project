@@ -2,7 +2,7 @@ package repository;
 
 import io.ebean.Ebean;
 import io.ebean.EbeanServer;
-import models.Inventory;
+import models.Menu;
 import play.db.ebean.EbeanConfig;
 
 import javax.inject.Inject;
@@ -14,22 +14,22 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 /**
  *
  */
-public class InventoryRepository {
+public class MenuRepository {
 
     private final EbeanServer ebeanServer;
     private final DatabaseExecutionContext executionContext;
 
     @Inject
-    public InventoryRepository(EbeanConfig ebeanConfig, DatabaseExecutionContext executionContext) {
+    public MenuRepository(EbeanConfig ebeanConfig, DatabaseExecutionContext executionContext) {
         this.ebeanServer = Ebean.getServer(ebeanConfig.defaultServer());
         this.executionContext = executionContext;
     }
 
-    public List<Inventory> all() {
-        return ebeanServer.find(Inventory.class).findList();
+    public List<Menu> all() {
+        return ebeanServer.find(Menu.class).findList();
     }
 
-    public List<Inventory> byRestaurant(String name) {
-        return ebeanServer.find(Inventory.class).where().eq("restaurant_name", name).findList();
+    public List<Menu> byRestaurant(String name) {
+        return ebeanServer.find(Menu.class).where().eq("restaurant_name", name).findList();
     }
 }
