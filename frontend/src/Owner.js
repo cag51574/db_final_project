@@ -7,7 +7,7 @@ import {RaisedButton, TextField, SelectField, MenuItem,Table,TableRowColumn,Tabl
 export default class Owner extends Component{
   componentDidMount() {
     //get current restaurant data
-    fetch("http://localhost:9000/restaurants")
+    fetch("http://localhost:9000/restaurant")
       .then(response => {
         //do something with response
         response.json().then( restaurants => {
@@ -18,11 +18,11 @@ export default class Owner extends Component{
         console.warn('ERROR');
     });
     //get current inventory data
-    fetch("http://localhost:9000/inventorys")
+    fetch("http://localhost:9000/inventories")
       .then(response => {
         //do something with response
-        response.json().then(inventorys => {
-          this.setState({ inventorys: inventorys });
+        response.json().then(inventories => {
+          this.setState({ inventories: inventories });
         });
       })
       .catch(err => {
@@ -67,7 +67,7 @@ export default class Owner extends Component{
   }
   //create restaurant
   createRestaurant() {
-    fetch("https://localhost:9000/restaurants/new"),{
+    fetch("https://localhost:9000/restaurant/new"),{
       method:'POST',
       headers:{
         'Accept': 'application/json',
@@ -163,7 +163,7 @@ export default class Owner extends Component{
       super(props);
       this.state = {
         restaurants:[],
-        inventorys:[],
+        inventories:[],
         menuItems:[],
         ingredients:[],
         selected: [],
@@ -348,7 +348,7 @@ export default class Owner extends Component{
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {this.state.inventorys.map((inventory) => {
+                  {this.state.inventories.map((inventory) => {
                       return(
                         <TableRow key={inventory.ingredient_name} selected={this.selected}>
                           <TableRowColumn>{inventory.restaurant_name}</TableRowColumn>
@@ -373,7 +373,7 @@ export default class Owner extends Component{
             <br/>
             <SelectField floatingLabelText="Inventory Item: " floatingLabelFixed={true}
               value={this.state.selectedInventory} onChange={this.selectedInventoryChange}>
-              {this.state.inventorys.map(inventory => {
+              {this.state.inventories.map(inventory => {
                   return(<MenuItem value={inventory.ingredient_name} primaryText={inventory.ingredient_name}/>)
               })}
             </SelectField>
