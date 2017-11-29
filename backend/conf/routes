@@ -23,4 +23,6 @@ GET /ingredient/:restaurant/:item   controllers.IngredientController.byRestauran
 # Our Owner routes go here
 
 
+POST /inventory/new                 controllers.InventoryController.new_item
+
 # Our Customer routes go here
