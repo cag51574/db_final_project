@@ -30,6 +30,6 @@ public class MenuRepository {
     }
 
     public List<Menu> byRestaurant(String name) {
-        return ebeanServer.find(Menu.class).where().eq("restaurant_name", name).findList();
+        return ebeanServer.find(Menu.class).where().eq("restaurant_name", name).setDistinct(true).findList();
     }
 }

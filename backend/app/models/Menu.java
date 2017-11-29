@@ -10,7 +10,6 @@ import javax.persistence.Id;
 @Entity
 public class Menu extends Model {
 
-    @Id
     public String restaurant_name;
 
     public String item_name;
