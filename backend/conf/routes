@@ -14,6 +14,9 @@ GET /restaurant/:name               controllers.RestaurantController.restaurant(
 GET /inventory                      controllers.InventoryController.all
 GET /inventory/:restaurant          controllers.InventoryController.byRestaurant(restaurant)
 
+GET /menu                           controllers.MenuController.all
+GET /menu/:restaurant               controllers.MenuController.byRestaurant(restaurant)
+
 # Our Owner routes go here
 
 
