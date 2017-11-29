@@ -6,6 +6,7 @@ import {RaisedButton, TextField, SelectField, MenuItem,Table,TableRowColumn,Tabl
 
 export default class Owner extends Component{
   componentDidMount() {
+    //get current restaurant data
     fetch("http://localhost:9000/restaurants")
       .then(response => {
         //do something with response
@@ -15,7 +16,18 @@ export default class Owner extends Component{
       })
       .catch(err => {
         console.warn('ERROR');
-      });
+    });
+    //get current inventory data
+    fetch("http://localhost:9000/inventory")
+      .then(response => {
+        //do something with response
+        response.json().then(inventory => {
+          this.setState({ inventory: inventory });
+        });
+      })
+      .catch(err => {
+        console.warn('ERROR');
+    });
   }
 
   //create restaurant
@@ -108,6 +120,31 @@ export default class Owner extends Component{
             <RaisedButton label="Submit" primary={true}/>
           </div>
 
+
+          <div className = "DisplayBox">
+            <h2>My Restaurants</h2>
+            <Table onRowSelection={this.handleRowSelection} height = '300px'>
+              <TableHeader>
+                  <TableRow>
+                    <TableHeaderColumn>Ingredient Name</TableHeaderColumn>
+                    <TableHeaderColumn>Quantity</TableHeaderColumn>
+                    <TableHeaderColumn>Unit</TableHeaderColumn>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {this.state.restaurants.map((restaurant) => {
+                      return(
+                        <TableRow key={restaurant.restaurant_name} selected={this.selected}>
+                          <TableRowColumn>{restaurant.restaurant_name}</TableRowColumn>
+                          <TableRowColumn>{restaurant.restaurant_phone}</TableRowColumn>
+                          <TableRowColumn>{restaurant.restaurant_phone}</TableRowColumn>
+                        </TableRow>
+                      )
+                  })}
+                </TableBody>
+            </Table>
+          </div>
+
           <div className = "FormBox">
             <h2>Remove Restaurant</h2>
 
@@ -123,10 +160,11 @@ export default class Owner extends Component{
           </div>
         </div>
 
+
         <div className="FormRow">
+
           <div className = "FormBox">
             <h2>Add Menu Item</h2>
-
             <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
               value={this.state.value}
               onChange={this.handleChange}>
@@ -140,6 +178,44 @@ export default class Owner extends Component{
             <TextField floatingLabelText="Price: " floatingLabelFixed={true} />
             <br/>
             <RaisedButton label="Submit" primary={true}/>
+          </div>
+
+          <div className = "DisplayBox">
+            <h2>Display Menu Items</h2>
+            <Table onRowSelection={this.handleRowSelection} height = '300px'>
+              <TableHeader>
+                  <TableRow>
+                    <TableHeaderColumn>Ingredient Name</TableHeaderColumn>
+                    <TableHeaderColumn>Quantity</TableHeaderColumn>
+                    <TableHeaderColumn>Unit</TableHeaderColumn>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {this.state.restaurants.map((restaurant) => {
+                      return(
+                        <TableRow key={restaurant.restaurant_name} selected={this.selected}>
+                          <TableRowColumn>{restaurant.restaurant_name}</TableRowColumn>
+                          <TableRowColumn>{restaurant.restaurant_phone}</TableRowColumn>
+                          <TableRowColumn>{restaurant.restaurant_phone}</TableRowColumn>
+                        </TableRow>
+                      )
+                  })}
+                </TableBody>
+            </Table>
+          </div>
+
+          <div className = "FormBox">
+            <h2>Remove Menu Item</h2>
+
+            <SelectField floatingLabelText="Menu Item: " floatingLabelFixed={true}
+              value={this.state.value}
+              onChange={this.handleChange}>
+              {this.state.restaurants.map(restaurant => {
+                  return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
+              })}
+            </SelectField>
+            <br/>
+            <RaisedButton label="Delete" primary={true}/>
           </div>
         </div>
 
@@ -181,26 +257,9 @@ export default class Owner extends Component{
             <RaisedButton label="Submit" primary={true}/>
           </div>
 
-
-          <div className = "FormBox">
-            <h2>Remove Menu Item Ingredient</h2>
-            <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
-              value={this.state.value}
-              onChange={this.handleChange}>
-              {this.state.restaurants.map(restaurant => {
-                  return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
-              })}
-            </SelectField>
-            <br/>
-            <SelectField floatingLabelText="Menu Item: " floatingLabelFixed={true}
-              value={this.state.value}
-              onChange={this.handleChange}>
-              {this.state.restaurants.map(restaurant => {
-                  return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
-              })}
-            </SelectField>
-
-            <Table onRowSelection={this.handleRowSelection}>
+          <div className = "DisplayBox">
+            <h2>My Restaurants</h2>
+            <Table onRowSelection={this.handleRowSelection} height = '300px'>
               <TableHeader>
                   <TableRow>
                     <TableHeaderColumn>Ingredient Name</TableHeaderColumn>
@@ -220,12 +279,118 @@ export default class Owner extends Component{
                   })}
                 </TableBody>
             </Table>
+          </div>
+
+          <div className = "FormBox">
+            <h2>Remove Menu Item Ingredient</h2>
+            <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
+              value={this.state.value}
+              onChange={this.handleChange}>
+              {this.state.restaurants.map(restaurant => {
+                  return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
+              })}
+            </SelectField>
             <br/>
+            <SelectField floatingLabelText="Menu Item: " floatingLabelFixed={true}
+              value={this.state.value}
+              onChange={this.handleChange}>
+              {this.state.restaurants.map(restaurant => {
+                  return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
+              })}
+            </SelectField>
             <RaisedButton label="Delete" primary={true}/>
           </div>
         </div>
 
+
+        <div className='FormRow'>
+          <div className = "FormBox">
+            <h2>Add Inventory Item</h2>
+
+            <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
+              value={this.state.value}
+              onChange={this.handleChange}>
+              {this.state.restaurants.map(restaurant => {
+                  return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
+              })}
+            </SelectField>
+            <br/>
+            <SelectField floatingLabelText="Menu Item: " floatingLabelFixed={true}
+              value={this.state.value}
+              onChange={this.handleChange}>
+              {this.state.restaurants.map(restaurant => {
+                  return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
+              })}
+            </SelectField>
+            <br/>
+            <TextField floatingLabelText="Ingredient: " floatingLabelFixed={true} />
+            <br/>
+            <TextField floatingLabelText="Quanitity: " floatingLabelFixed={true} />
+            <br/>
+            <SelectField floatingLabelText="Unit: " floatingLabelFixed={true}
+              value={this.state.value}
+              onChange={this.handleChange}>
+              <MenuItem value={1} primaryText="Oz"/>
+              <MenuItem value={2} primaryText="Gram"/>
+              <MenuItem value={3} primaryText="Lb"/>
+              <MenuItem value={4} primaryText="Tsp"/>
+              <MenuItem value={5} primaryText="Piece"/>
+              <MenuItem value={6} primaryText="Slice"/>
+            </SelectField>
+            <br/>
+            <RaisedButton label="Submit" primary={true}/>
+          </div>
+
+          <div className = "DisplayBox">
+            <h2>My Inventory</h2>
+            <Table onRowSelection={this.handleRowSelection} height = '300px'>
+              <TableHeader>
+                  <TableRow>
+                    <TableHeaderColumn>Ingredient Name</TableHeaderColumn>
+                    <TableHeaderColumn>Quantity</TableHeaderColumn>
+                    <TableHeaderColumn>Unit</TableHeaderColumn>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {this.state.restaurants.map((restaurant) => {
+                      return(
+                        <TableRow key={restaurant.restaurant_name} selected={this.selected}>
+                          <TableRowColumn>{restaurant.restaurant_name}</TableRowColumn>
+                          <TableRowColumn>{restaurant.restaurant_phone}</TableRowColumn>
+                          <TableRowColumn>{restaurant.restaurant_phone}</TableRowColumn>
+                        </TableRow>
+                      )
+                  })}
+                </TableBody>
+            </Table>
+          </div>
+
+          <div className = "FormBox">
+            <h2>Remove Inventory Object</h2>
+            <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
+              value={this.state.value}
+              onChange={this.handleChange}>
+              {this.state.restaurants.map(restaurant => {
+                  return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
+              })}
+            </SelectField>
+            <br/>
+            <SelectField floatingLabelText="Menu Item: " floatingLabelFixed={true}
+              value={this.state.value}
+              onChange={this.handleChange}>
+              {this.state.restaurants.map(restaurant => {
+                  return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
+              })}
+            </SelectField>
+            <RaisedButton label="Delete" primary={true}/>
+          </div>
+        </div>
+
+
+
       </div>
+
+
 
       </MuiThemeProvider>
     )
