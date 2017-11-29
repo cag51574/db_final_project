@@ -25,19 +25,11 @@ public class InventoryRepository {
         this.executionContext = executionContext;
     }
 
+    public List<Inventory> all() {
+        return ebeanServer.find(Inventory.class).findList();
+    }
 
-    public CompletionStage<List<Inventory>> all() {
-        return supplyAsync(() -> ebeanServer.find(Inventory.class).findList(), executionContext)
-        .thenApply(list -> {
-                /*
-                Inventory inv = new Inventory();
-                inv.setRestaurant("Siri Thai");
-                inv.setIngredient_name("Broccoli");
-                inv.setQuantity(5);
-                inv.setUnit("Florets");
-                ebeanServer.save(inv);
-                */
-                return list;
-            });
+    public List<Inventory> byRestaurant(String name) {
+        return ebeanServer.find(Inventory.class).where().eq("restaurant_name", name).findList();
     }
 }
