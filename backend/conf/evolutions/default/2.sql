@@ -342,5 +342,6 @@ INSERT INTO Inventory (restaurant_name, ingredient_name, quantity, unit) VALUES 
 
 
 # --- !Downs
-delete from Restaurant;
+
 delete from Inventory;
+delete from Restaurant;
