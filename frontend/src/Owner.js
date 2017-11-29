@@ -29,7 +29,7 @@ export default class Owner extends Component{
         console.warn('ERROR');
     });
 
-    fetch("http://localhost:9000/menuItems")
+    fetch("http://localhost:9000/menus")
       .then(response => {
         //do something with response
         response.json().then(menuItems => {
@@ -165,6 +165,7 @@ export default class Owner extends Component{
         restaurants:[],
         inventorys:[],
         menuItems:[],
+        ingredients:[],
         selected: [],
         selectedRest: 1,
       };
@@ -227,7 +228,6 @@ export default class Owner extends Component{
   };
   render() {
     return(
-      //restaurant
       <MuiThemeProvider>
       <div>{this.state.selectedRest}</div>
       <div>
@@ -239,6 +239,7 @@ export default class Owner extends Component{
       </div>
       <div className="DocBody">
         <h1>Owner Homepage</h1>
+      <h2>Manage Restaurants</h2>
         <div className='FormRow'>
           <div className = "FormBox">
             <h2>Create Restaurant</h2>
