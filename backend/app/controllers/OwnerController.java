@@ -31,16 +31,6 @@ public class OwnerController extends Controller {
         this.httpExecutionContext = httpExecutionContext;
     }
 
-    public CompletionStage<Result> createRestaurant() {
-        JsonNode json = request().body().asJson();
-        String restaurantName = json.findPath("restaurant_name").asText();
-        String location = json.findPath("location").asText();
-        String ownerFirstName = json.findPath("owner_first_name").asText();
-        String ownerLastName = json.findPath("owner_last_name").asText();
-        String phoneNumber = json.findPath("restaurant_phone").asText();
-        return ownerRepository.createRestaurant(restaurantName, location, ownerFirstName, ownerLastName, phoneNumber).thenApplyAsync(e -> ok(Json.toJson(e)), httpExecutionContext.current());
-    }
-
     /*
     public CompletionStage<Result> restaurants() {
         return restaurantRepository.all().thenApplyAsync(list -> {
