@@ -7,10 +7,11 @@ GET     /                           controllers.HomeController.index
 
 
 # Our Routes will go down here.
-GET /restaurants                    controllers.HomeController.restaurants
 GET /inventories                    controllers.HomeController.inventories
 GET /restaurant_names               controllers.HomeController.restaurantNames
 
+GET /restaurant                     controllers.RestaurantController.restaurants
+GET /restaurant/:name               controllers.RestaurantController.restaurant(name)
 
 # Our Owner routes go here
 

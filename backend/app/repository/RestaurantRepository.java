@@ -27,17 +27,17 @@ public class RestaurantRepository {
     }
 
 
-    public CompletionStage<List<Restaurant>> all() {
-        return supplyAsync(() -> ebeanServer.find(Restaurant.class).findList(), executionContext)
-            .thenApply(list -> {
-                    return list;
-                });
+    public List<Restaurant> all() {
+        return ebeanServer.find(Restaurant.class).findList();
+    }
+
+    public Restaurant byName(String name) {
+        return ebeanServer.find(Restaurant.class).where().eq("restaurant_name", name).findUnique();
     }
 
     public CompletionStage<List<String>> allNames() {
         return supplyAsync(() -> ebeanServer.find(Restaurant.class).findList().stream().map(r -> r.restaurant_name).collect(Collectors.toList()), executionContext);
     }
-
     /*
     public CompletionStage<Map<String, String>> options() {
         return supplyAsync(() -> ebeanServer.find(Company.class).orderBy("name").findList(), executionContext)

@@ -28,18 +28,7 @@ public class OwnerRepository {
         this.executionContext = executionContext;
     }
 
-    public CompletionStage<String> createRestaurant(String restaurantName, String location, String ownerFirstName, String ownerLastName, String phoneNumber) {
-        return supplyAsync(() -> {
-                Restaurant r = new Restaurant();
-                r.restaurant_name = restaurantName;
-                r.location = location;
-                r.owner_first_name = ownerFirstName;
-                r.owner_last_name = ownerLastName;
-                r.restaurant_phone = phoneNumber;
-                ebeanServer.save(r);
-                return("OK");
-            }, executionContext);
-    }
+
 
     /*
     public CompletionStage<List<Owner>> all() {
