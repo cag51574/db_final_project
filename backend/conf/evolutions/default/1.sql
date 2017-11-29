@@ -2,15 +2,26 @@
 
 # --- !Ups
 
-CREATE TABLE Restaurant (
-       restaurant_name VARCHAR(50) PRIMARY KEY,
-       location VARCHAR(50),
-       owner_first_name VARCHAR(50),
-       owner_last_name VARCHAR(50),
-       restaurant_phone VARCHAR(10)
+CREATE TABLE IF NOT EXISTS Account (
+       email VARCHAR(50) PRIMARY KEY,
+       full_name VARCHAR(50),
+       auth_token VARCHAR(256),
+       password_digest VARCHAR(256)
 );
 
-CREATE TABLE Inventory (
+
+CREATE TABLE IF NOT EXISTS Restaurant (
+       restaurant_name VARCHAR(50) PRIMARY KEY,
+       location VARCHAR(50),
+       restaurant_phone VARCHAR(10),
+       email VARCHAR(50),
+       CONSTRAINT fk_restaurant_to_account
+                  FOREIGN KEY (email)
+                  REFERENCES Account(email)
+                  ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Inventory (
        restaurant_name VARCHAR(50),
        ingredient_name VARCHAR(50),
        quantity Double Precision,
@@ -22,7 +33,7 @@ CREATE TABLE Inventory (
        CONSTRAINT pk_inventory PRIMARY KEY (restaurant_name, ingredient_name)
 );
 
-CREATE TABLE Menu (
+CREATE TABLE IF NOT EXISTS Menu (
        restaurant_name VARCHAR(50),
        item_name VARCHAR(50),
        price Integer,
@@ -33,7 +44,7 @@ CREATE TABLE Menu (
        CONSTRAINT pk_menu PRIMARY KEY (restaurant_name, item_name)
 );
 
-CREATE TABLE Ingredient (
+CREATE TABLE IF NOT EXISTS Ingredient (
        restaurant_name VARCHAR(50),
        item_name VARCHAR(50),
        ingredient_name VARCHAR(50),
@@ -50,14 +61,17 @@ CREATE TABLE Ingredient (
        CONSTRAINT pk_ingredient PRIMARY KEY (restaurant_name, item_name, ingredient_name)
 );
 
-CREATE TABLE Ticket (
+CREATE TABLE IF NOT EXISTS Ticket (
        order_num Integer,
-       customer_name VARCHAR(50),
        order_date DATE,
-       CONSTRAINT pk_ticket PRIMARY KEY (order_num)
+       email VARCHAR(50),
+       CONSTRAINT pk_ticket PRIMARY KEY (order_num),
+       CONSTRAINT fk_ticket_to_account
+                  FOREIGN KEY (email)
+                  REFERENCES Account(email)
 );
 
-CREATE TABLE Item_Order (
+CREATE TABLE IF NOT EXISTS Item_Order (
        order_num Integer,
        item_name VARCHAR(50),
        restaurant_name VARCHAR(50),
@@ -77,7 +91,8 @@ CREATE TABLE Item_Order (
 
 DROP TABLE Ingredient;
 DROP TABLE Inventory;
-DROP TABLE Ticket;
 DROP TABLE Item_Order;
+DROP TABLE Ticket;
 DROP TABLE Menu;
 DROP TABLE Restaurant;
+DROP TABLE Account;

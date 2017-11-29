@@ -15,9 +15,7 @@ public class Restaurant extends Model {
 
     public String location;
 
-    public String owner_first_name;
-
-    public String owner_last_name;
+    public String email;
 
     public String restaurant_phone;
 }

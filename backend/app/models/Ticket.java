@@ -13,7 +13,7 @@ public class Ticket extends Model {
 
        public int order_num;
 
-       public String customer_name;
+       public String email;
 
-       public Date Norder_date;
+       public Date order_date;
 }
