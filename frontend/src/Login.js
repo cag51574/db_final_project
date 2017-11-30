@@ -32,13 +32,14 @@ export default class Login extends Component {
     fetch("http://localhost:9000/signup/" + email + "/" + password + "/" + full_name)
       .then(response => {
         if (response.status === 200) {
-          response.json().then(b => console.warn(b));
-          this.props.onLogin(response.body);
+          return response.json();
         } else {
           this.setState({error: response.statusText});
         }
       })
+      .then(body => this.props.onLogin(body))
       .catch(e => this.setState({error: e.message}));
+
   }
 
 
