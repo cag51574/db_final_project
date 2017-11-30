@@ -40,7 +40,7 @@ export default class Customer extends Component{
         itemList: [],
         deselectOnClickaway: false,
         displaySelectAll: false,
-        finalText: null
+        finalText: null,
       };
       this.handleRowSelection = this.handleRowSelection.bind(this);
   }
@@ -80,21 +80,20 @@ export default class Customer extends Component{
   }
 
   placeOrder = () => {
-    fetch("https://localhost:9000/order",{
-      method:'POST',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body:{
-        restaurant_name : this.restList,
-        item_name : this.itemList
-    }})
-    .then(
-      this.setState({
-        finalText: 'Order was completed!'
+    var order_number = parseInt(Math.random() * 1000);
+    fetch("http://localhost:9000/ticket/new/" + order_number + '/' + this.props.auth_token)
+      .then(response => {
+        //do something with response
+        response.json().then( order_number => {
+          this.setState({ order_number: order_number });
+        });
       })
-    )
+      .catch(err => {
+        console.warn('ERROR');
+    });
+    for(var i = 0; i<this.state.restList.length ;i++){
+      fetch("http://localhost:9000/order/new/" + order_number + '/' + this.state.restList[i] + '/' + this.state.itemList[i]);
+    }
   };
 
     render() {
