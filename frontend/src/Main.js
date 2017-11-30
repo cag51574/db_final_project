@@ -1,22 +1,29 @@
-import React from 'react'
-import { Switch, Route } from 'react-router-dom'
-import Home from './Home'
-import Owner from './Owner'
-import Customer from './Customer'
+import React, { Component } from 'react';
+import './Global.css';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {RaisedButton, TextField, SelectField, MenuItem,Table,TableRowColumn,TableHeaderColumn,TableBody,TableHeader,TableRow} from 'material-ui';
+import Home from './Home';
+import Owner from './Owner';
+import Customer from './Customer';
+import Login from './Login';
 
-// The Main component renders one of the three provided
-// Routes (provided that one matches). Both the /roster
-// and /schedule routes will match any pathname that starts
-// with /roster or /schedule. The / route will only match
-// when the pathname is exactly the string "/"
-const Main = () => (
-  <main>
-    <Switch>
-      <Route exact path='/' component={Home}/>
-      <Route path='/owner' component={Owner}/>
-      <Route path='/customer' component={Customer}/>
-    </Switch>
-  </main>
-)
+export default class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {auth_token: null};
+  }
 
-export default Main
+  onLogin = auth_token => {
+    this.setState({auth_token: auth_token});
+ console.warn(auth_token);
+  }
+  render() {
+    return (
+      <div>
+        <MuiThemeProvider>
+        {this.state.auth_token ? <Home auth_token={this.state.auth_token}/> : <Login onLogin={this.onLogin}/>}
+        </MuiThemeProvider>
+      </div>
+    )
+  }
+}

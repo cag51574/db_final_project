@@ -32,4 +32,14 @@ public class InventoryRepository {
     public List<Inventory> byRestaurant(String name) {
         return ebeanServer.find(Inventory.class).where().eq("restaurant_name", name).findList();
     }
+
+    // Need to add error handeling
+    public void new_item(String restaurant_name, String ingredient_name, int quantity, String unit) {
+        Inventory inventory = new Inventory();
+        inventory.restaurant_name = restaurant_name;
+        inventory.ingredient_name = ingredient_name;
+        inventory.quantity = quantity;
+        inventory.unit = unit;
+        ebeanServer.save(inventory);
+    }
 }

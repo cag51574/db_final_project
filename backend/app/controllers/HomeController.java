@@ -27,6 +27,10 @@ public class HomeController extends Controller {
     private final InventoryRepository inventoryRepository;
     private final HttpExecutionContext httpExecutionContext;
 
+
+
+
+
     @Inject
     public HomeController(RestaurantRepository restaurantRepository,
                           InventoryRepository inventoryRepository,
@@ -37,6 +41,14 @@ public class HomeController extends Controller {
     }
 
    
+
+    public Result preflight(String all) {
+        response().setHeader("Access-Control-Allow-Origin", "*");
+        response().setHeader("Allow", "*");
+        response().setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
+        response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Referer, User-Agent");
+        return ok();
+    }
 
     public CompletionStage<Result> restaurantNames() {
         return restaurantRepository.allNames().thenApplyAsync(list -> ok(Json.toJson(list)), httpExecutionContext.current());

@@ -18,11 +18,19 @@ export default class Owner extends Component{
         console.warn('ERROR');
     });
     //get current inventory data
+<<<<<<< HEAD
     fetch("http://localhost:9000/inventory")
       .then(response => {
         //do something with response
         response.json().then( inventorys => {
           this.setState({ inventorys: inventorys });
+=======
+    fetch("http://localhost:9000/inventories")
+      .then(response => {
+        //do something with response
+        response.json().then(inventories => {
+          this.setState({ inventories: inventories });
+>>>>>>> 794ed147c1631880ae669a014a7779495aac9873
         });
       })
       .catch(err => {
@@ -89,7 +97,7 @@ export default class Owner extends Component{
   }
   //create restaurant
   createRestaurant() {
-    fetch("https://localhost:9000/restaurants/new"),{
+    fetch("https://localhost:9000/restaurant/new"),{
       method:'POST',
       headers:{
         'Accept': 'application/json',
@@ -148,7 +156,7 @@ export default class Owner extends Component{
 
   //add Ingredient for menu item
   addIngredient() {
-    fetch("https://localhost:9000/menuItem/new"),{
+    fetch("https://localhost:9000/ingredient/new"),{
       method:'POST',
       headers:{
         'Accept': 'application/json',
@@ -185,7 +193,7 @@ export default class Owner extends Component{
       super(props);
       this.state = {
         restaurants:[],
-        inventorys:[],
+        inventories:[],
         menuItems:[],
         ingredients:[],
         selected: [],
@@ -467,7 +475,7 @@ export default class Owner extends Component{
             <br/>
             <SelectField floatingLabelText="Inventory Item: " floatingLabelFixed={true}
               value={this.state.selectedInventory} onChange={this.selectedInventoryChange}>
-              {this.state.inventorys.map(inventory => {
+              {this.state.inventories.map(inventory => {
                   return(<MenuItem value={inventory.ingredient_name} primaryText={inventory.ingredient_name}/>)
               })}
             </SelectField>
