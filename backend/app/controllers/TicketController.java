@@ -54,7 +54,13 @@ public class TicketController extends Controller {
             return badRequest("Missing date.");
         }
         User user = userRepository.findByAuthToken(auth_token);
-        ticketRepository.new_item(Integer.parseInt(order_num), user.email, new Date());
+        String email;
+        if (user == null) {
+            email = "monopoly@fcc.com";
+        } else {
+            email = user.getEmailAddress();
+        }
+        ticketRepository.new_item(Integer.parseInt(order_num), email, new Date());
         return ok();
     }
 

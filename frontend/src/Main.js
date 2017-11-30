@@ -12,7 +12,7 @@ export default class Main extends Component {
   }
 
   onLogin = auth_token => {
-    this.setState({auth_token: auth_token});
+    this.setState({auth_token: auth_token["auth_token"]});
  console.warn(auth_token);
   }
   render() {
