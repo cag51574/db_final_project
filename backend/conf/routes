@@ -20,7 +20,6 @@ GET /menu/:restaurant               controllers.MenuController.byRestaurant(rest
 GET /ingredient                     controllers.IngredientController.all
 GET /ingredient/:restaurant/:item   controllers.IngredientController.byRestaurantAndItem(restaurant, item)
 
-# Our Owner routes go here
+GET /login/:email/:password                         controllers.SecurityController.login(email, password)
 
 
-# Our Customer routes go here

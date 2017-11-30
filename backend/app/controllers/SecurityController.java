@@ -50,32 +50,30 @@ public class SecurityController extends Controller {
         this.httpExecutionContext = httpExecutionContext;
     }
 
-
-    public CompletionStage<Result> login() {
-        Form<Login> loginForm = formFactory.form(Login.class).bindFromRequest();
-        if (loginForm.hasErrors()) {
-            return supplyAsync(() -> badRequest(loginForm.errorsAsJson()), httpExecutionContext.current());
+    public CompletionStage<Result> login(String email, String password) {
+        if (email == null || password == null) {
+            return supplyAsync(() -> badRequest("Cannot leave email or password blank."));
+        } else {
+            return userRepository.findByEmailAddressAndPassword(email, password)
+                .thenApplyAsync(user -> {
+                        if (user == null) {
+                            return unauthorized();
+                        } else {
+                            String auth_token = user.createToken();
+                            ObjectNode auth_token_json = Json.newObject();
+                            auth_token_json.put(AUTH_TOKEN, auth_token);
+                            return ok(auth_token_json);
+                        }
+                    }, httpExecutionContext.current());
+            
         }
-        Login login = loginForm.get();
-
-        return userRepository.findByEmailAddressAndPassword(login.emailAddress, login.password)
-            .thenApplyAsync(user -> {
-                    if (user == null) {
-                        return unauthorized();
-                    } else {
-                        String auth_token = user.createToken();
-                        ObjectNode auth_token_json = Json.newObject();
-                        auth_token_json.put(AUTH_TOKEN, auth_token);
-                        return ok(auth_token_json);
-                    }
-                }, httpExecutionContext.current());
     }
 
     public static class Login {
 
         @Constraints.Required
         @Constraints.Email
-        public String emailAddress;
+        public String email;
 
         @Constraints.Required
         public String password;
