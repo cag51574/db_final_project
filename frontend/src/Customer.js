@@ -38,9 +38,10 @@ export default class Customer extends Component{
         selectedRest: true,
         restList: [],
         itemList: [],
+        orders: {},
         deselectOnClickaway: false,
         displaySelectAll: false,
-        finalText: null
+        finalText: null,
       };
       this.handleRowSelection = this.handleRowSelection.bind(this);
   }
@@ -61,9 +62,12 @@ export default class Customer extends Component{
 
   selectedRestChange = (event, index, value) => {
     const target = event.target;
+    var orders = {};
+    this.menus.filter(menu => menu.restaurant_name === value).forEach(menu => orders[menu] = 0);
     this.setState({
-      selectedRest : value
-    });
+      selectedRest: value,
+      orders: orders
+    );
   }
 
   //select menu items
@@ -80,21 +84,20 @@ export default class Customer extends Component{
   }
 
   placeOrder = () => {
-    fetch("https://localhost:9000/order",{
-      method:'POST',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body:{
-        restaurant_name : this.restList,
-        item_name : this.itemList
-    }})
-    .then(
-      this.setState({
-        finalText: 'Order was completed!'
+    var order_number = parseInt(Math.random() * 1000);
+    fetch("http://localhost:9000/ticket/new/" + order_number + '/' + this.props.auth_token)
+      .then(response => {
+        //do something with response
+        response.json().then( order_number => {
+          this.setState({ order_number: order_number });
+        });
       })
-    )
+      .catch(err => {
+        console.warn('ERROR');
+    });
+    for(var i = 0; i<this.state.restList.length ;i++){
+      fetch("http://localhost:9000/order/new/" + order_number + '/' + this.state.restList[i] + '/' + this.state.itemList[i]);
+    }
   };
 
     render() {
@@ -112,9 +115,13 @@ export default class Customer extends Component{
             <Table onRowSelection={this.handleRowSelection}
               height = '300px'
               multiSelectable = "false"
+              selectable={false}
+
             >
               <TableHeader
                   displaySelectAll = {this.state.displaySelectAll}
+                  displaySelectAll={true}
+                  adjustForCheckbox={true}
               >
                   <TableRow>
                     <TableHeaderColumn>Restaurant Name</TableHeaderColumn>
@@ -131,7 +138,7 @@ export default class Customer extends Component{
                           <TableRowColumn>{menu.item_name}</TableRowColumn>
                           <TableRowColumn>{menu.price}</TableRowColumn>
                           <TableRowColumn>
-                            <TextField onChange={this.handleTextChange} name={this.item_name}></TextField>
+                          <TextField onChange={this.updateOrder} name={this.item_name}></TextField>
                           </TableRowColumn>
                         </TableRow>
                       )

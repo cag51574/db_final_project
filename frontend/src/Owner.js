@@ -87,13 +87,8 @@ export default class Owner extends Component{
 
   //add inventory
   createInventoryItem = () => {
-    var url = this.state.urlHeader + 'inventory/new/' + this.state.newInventoryName + '/' + this.state.selectedRest + '/' + this.state.newInventoryQuantity + '/' + this.state.selectedUnit;
+    var url = this.state.urlHeader + 'inventory/new/' + this.state.selectedRest + '/' + this.state.newInventoryName + '/' + this.state.newInventoryQuantity + '/' + this.state.selectedUnit;
     fetch(url)
-      .then(response => {
-        //do something with response
-        response.json().then(ingredients => {
-        });
-      })
       .catch(err => {
         console.warn('ERROR');
     });
@@ -103,11 +98,6 @@ export default class Owner extends Component{
   createMenuItem = () => {
     var url = this.state.urlHeader + 'menu/new/' + this.state.newItemName + '/' + this.state.selectedRest + '/' + this.state.newItemPrice;
     fetch(url)
-      .then(response => {
-        //do something with response
-        response.json().then(ingredients => {
-        });
-      })
       .catch(err => {
         console.warn('ERROR');
     });
@@ -117,11 +107,6 @@ export default class Owner extends Component{
   addIngredient = () => {
     var url = this.state.urlHeader + 'ingredient/new/' + this.state.selectedRest + '/' + this.state.selectedItemName + '/' + this.state.selectedIngredient + '/' + this.state.newIngredientPortion;
     fetch(url)
-      .then(response => {
-        //do something with response
-        response.json().then(ingredients => {
-        });
-      })
       .catch(err => {
         console.warn('ERROR');
     });
@@ -170,6 +155,19 @@ export default class Owner extends Component{
 
   deleteIngredient = () => {
     var url = this.state.urlHeader + 'ingredient/delete/' + this.state.selectedRest + '/' + this.state.selectedItemName + '/' + this.state.selectedIngredient;
+    fetch(url)
+      .then(response => {
+        //do something with response
+        response.json().then(ingredients => {
+        });
+      })
+      .catch(err => {
+        console.warn('ERROR');
+    });
+  }
+
+  deleteTicket = () => {
+    var url = this.state.urlHeader + 'ticket/delete/' + this.state.selectedON;
     fetch(url)
       .then(response => {
         //do something with response
@@ -280,7 +278,7 @@ export default class Owner extends Component{
         <h1 className='Header'>Owner Homepage</h1>
 
 
-        <h2>Current Orders</h2>
+        <h2>Current Orders on Ticket</h2>
         <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
           value={this.state.selectedRest} onChange={this.selectedRestChange}>
           {this.state.restaurants.map(restaurant => {
@@ -349,6 +347,12 @@ export default class Owner extends Component{
           <div className='FormRow'>
             <div className = "FormBox">
               <h2>Mark Ticket as Picked Up</h2>
+              <SelectField floatingLabelText="Order number: " floatingLabelFixed={true}
+                value={this.state.selectedON} onChange={this.selectedONChange}>
+                {this.state.orders.filter(order => order.restaurant_name === this.state.selectedON).map(order => {
+                    return(<MenuItem value={order.order_num} primaryText={order.order_num}/>)
+                })}
+              </SelectField>
               <br/>
               <RaisedButton label="Complete" primary={true} onClick={this.deleteTicket}/>
             </div>
