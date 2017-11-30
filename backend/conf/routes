@@ -23,8 +23,6 @@ GET /ingredient/:restaurant/:item   controllers.IngredientController.byRestauran
 GET /login/:email/:password                         controllers.SecurityController.login(email, password)
 
 
-POST /inventory/new                 controllers.InventoryController.new_item
-POST /menuItem/new                  controllers.MenuController.new_item
-POST /ingredient/new                controllers.IngredientController.new_ingredient
-
-
+GET /inventory/new/:restaurant_name/:ingredient_name/:quantity/:unit                controllers.InventoryController.new_item(restaurant_name,ingredient_name,quantity,unit)
+GET /menu/new/:restaurant_name/:item_name/:price                  controllers.MenuController.new_item(restaurant_name,item_name,price)
+GET /ingredient/new/:restaurant_name/:item_name/:ingredient_name/:quantity/:unit                controllers.IngredientController.new_ingredient(restaurant_name,item_name,ingredient_name,quantity,unit)
