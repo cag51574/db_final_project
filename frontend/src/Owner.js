@@ -231,6 +231,14 @@ export default class Owner extends Component{
     });
   }
 
+  selectedONChange = (event, index, value) => {
+    const target = event.target;
+    this.setState({
+      selectedON : value
+    });
+  }
+
+
   handleSubmit (event) {
     event.preventDefault();
     var restaurant_name = this.state.newRestName;
@@ -266,12 +274,36 @@ export default class Owner extends Component{
         </SelectField>
           <div className='FormRow'>
 
-            <div className = "FormBox">
+            <div className = "OrderBox">
+              <h2>Current Tickets For PickUp</h2>
+              <Table onRowSelection={this.handleRowSelection} height = '300px'>
+                <TableHeader>
+                    <TableRow>
+                      <TableHeaderColumn>Order Number</TableHeaderColumn>
+                      <TableHeaderColumn>Order Date</TableHeaderColumn>
+                      <TableHeaderColumn>Customer Email</TableHeaderColumn>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {this.state.tickets.filter(ticket=>ticket.restaurant_name===this.state.selectedRest).map((ticket, index) => {
+                        return(
+                          <TableRow key={ticket.restaurant_name} selected={this.selected}>
+                            <TableRowColumn>{ticket.order_num}</TableRowColumn>
+                            <TableRowColumn>{ticket.item_name}</TableRowColumn>
+                            <TableRowColumn>{ticket.item_quantity}</TableRowColumn>
+                          </TableRow>
+                        )
+                    })}
+                  </TableBody>
+              </Table>
+            </div>
+
+            <div className = "OrderBox">
               <h2>Current Orders</h2>
-              <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
-                value={this.state.selectedRest} onChange={this.selectedRestChange}>
-                {this.state.restaurants.map(restaurant => {
-                    return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
+              <SelectField floatingLabelText="Order number: " floatingLabelFixed={true}
+                value={this.state.selectedON} onChange={this.selectedONChange}>
+                {this.state.orders.filter(order => order.restaurant_name === this.state.selectedON).map(order => {
+                    return(<MenuItem value={order.order_num} primaryText={order.order_num}/>)
                 })}
               </SelectField>
               <Table onRowSelection={this.handleRowSelection} height = '300px'>
@@ -305,31 +337,6 @@ export default class Owner extends Component{
               <br/>
               <RaisedButton label="Complete" primary={true} onClick={this.deleteTicket}/>
             </div>
-
-            <div className = "DisplayBox">
-              <h2>Current Tickets For PickUp</h2>
-              <Table onRowSelection={this.handleRowSelection} height = '300px'>
-                <TableHeader>
-                    <TableRow>
-                      <TableHeaderColumn>Order Number</TableHeaderColumn>
-                      <TableHeaderColumn>Order Date</TableHeaderColumn>
-                      <TableHeaderColumn>Customer Email</TableHeaderColumn>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {this.state.tickets.filter(ticket=>ticket.restaurant_name===this.state.selectedRest).map((ticket, index) => {
-                        return(
-                          <TableRow key={ticket.restaurant_name} selected={this.selected}>
-                            <TableRowColumn>{ticket.order_num}</TableRowColumn>
-                            <TableRowColumn>{ticket.item_name}</TableRowColumn>
-                            <TableRowColumn>{ticket.item_quantity}</TableRowColumn>
-                          </TableRow>
-                        )
-                    })}
-                  </TableBody>
-              </Table>
-            </div>
-
           </div>
 
 
@@ -457,7 +464,7 @@ export default class Owner extends Component{
           </div>
 
           <div className = "FormBox">
-            <h2>Remove Inventory Object</h2>
+            <h2>Remove Inventory Item</h2>
             <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
               value={this.state.selectedRest} onChange={this.selectedRestChange}>
               {this.state.restaurants.map(restaurant => {
@@ -467,7 +474,7 @@ export default class Owner extends Component{
             <br/>
             <SelectField floatingLabelText="Inventory Item: " floatingLabelFixed={true}
               value={this.state.selectedInventory} onChange={this.selectedInventoryChange}>
-              {this.state.inventorys.map(inventory => {
+              {this.state.inventorys.filter(inventory=>inventory.restaurant_name===this.state.selectedRest).map(inventory => {
                   return(<MenuItem value={inventory.ingredient_name} primaryText={inventory.ingredient_name}/>)
               })}
             </SelectField>
@@ -531,9 +538,8 @@ export default class Owner extends Component{
               })}
             </SelectField>
             <SelectField floatingLabelText="Menu Item: " floatingLabelFixed={true}
-              value={this.state.value}
-              onChange={this.handleChange}>
-              {this.state.menuItems.map(menuItem => {
+              value={this.state.selectedMenuItem} onChange={this.selectedMenuItemChange}>
+              {this.state.menuItems.filter(menuItem=>menuItem.restaurant_name===this.state.selectedRest).map(menuItem => {
                   return(<MenuItem value={menuItem.item_name} primaryText={menuItem.item_name}/>)
               })}
             </SelectField>
@@ -555,10 +561,9 @@ export default class Owner extends Component{
               </SelectField>
               <br/>
               <SelectField floatingLabelText="Menu Item: " floatingLabelFixed={true}
-                value={this.state.value}
-                onChange={this.handleChange}>
-                {this.state.restaurants.map(restaurant => {
-                    return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
+                value={this.state.selectedMenuItem} onChange={this.selectedMenuItemChange}>
+                {this.state.menuItems.filter(menuItem=>menuItem.restaurant_name===this.state.selectedRest).map(menuItem => {
+                    return(<MenuItem value={menuItem.item_name} primaryText={menuItem.item_name}/>)
                 })}
               </SelectField>
               <br/>
@@ -627,14 +632,14 @@ export default class Owner extends Component{
             <br/>
             <SelectField floatingLabelText="Menu Item: " floatingLabelFixed={true}
               value={this.state.selectedMenuItem} onChange={this.selectedMenuItemChange}>
-              {this.state.menuItems.map(menuItem => {
+              {this.state.menuItems.filter(menuItem=>menuItem.restaurant_name===this.state.selectedRest).map(menuItem => {
                   return(<MenuItem value={menuItem.item_name} primaryText={menuItem.item_name}/>)
               })}
             </SelectField>
             <br/>
             <SelectField floatingLabelText="Ingredient Name: " floatingLabelFixed={true}
               value={this.state.selectedIngredient} onChange={this.selectedIngredientChange}>
-              {this.state.ingredients.map(ingredient => {
+              {this.state.ingredients.filter(ingredient => ingredient.item_name===this.state.selectedMenuItem).map(ingredient => {
                   return(<MenuItem value={ingredient.ingredient_name} primaryText={ingredient.ingredient_name}/>)
               })}
             </SelectField>
