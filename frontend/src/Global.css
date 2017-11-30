@@ -26,6 +26,16 @@ body {
   display: table-cell;
   float: left;
 }
+.OrderBox {
+  width: 650px;
+  height: 500px;
+  margin-right: 20px;
+  margin-top: 20px;
+  padding: 10px;
+  border: 2px solid grey;
+  display: table-cell;
+  float: left;
+}
 .FormRow {
   display: table;
   width: 1200;

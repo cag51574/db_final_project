@@ -246,6 +246,14 @@ export default class Owner extends Component{
     });
   }
 
+  selectedONChange = (event, index, value) => {
+    const target = event.target;
+    this.setState({
+      selectedON : value
+    });
+  }
+
+
   handleSubmit (event) {
     event.preventDefault();
     var restaurant_name = this.state.newRestName;
@@ -281,12 +289,36 @@ export default class Owner extends Component{
         </SelectField>
           <div className='FormRow'>
 
-            <div className = "FormBox">
+            <div className = "OrderBox">
+              <h2>Current Tickets For PickUp</h2>
+              <Table onRowSelection={this.handleRowSelection} height = '300px'>
+                <TableHeader>
+                    <TableRow>
+                      <TableHeaderColumn>Order Number</TableHeaderColumn>
+                      <TableHeaderColumn>Order Date</TableHeaderColumn>
+                      <TableHeaderColumn>Customer Email</TableHeaderColumn>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {this.state.tickets.filter(ticket=>ticket.restaurant_name===this.state.selectedRest).map((ticket, index) => {
+                        return(
+                          <TableRow key={ticket.restaurant_name} selected={this.selected}>
+                            <TableRowColumn>{ticket.order_num}</TableRowColumn>
+                            <TableRowColumn>{ticket.item_name}</TableRowColumn>
+                            <TableRowColumn>{ticket.item_quantity}</TableRowColumn>
+                          </TableRow>
+                        )
+                    })}
+                  </TableBody>
+              </Table>
+            </div>
+
+            <div className = "OrderBox">
               <h2>Current Orders</h2>
-              <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
-                value={this.state.selectedRest} onChange={this.selectedRestChange}>
-                {this.state.restaurants.map(restaurant => {
-                    return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
+              <SelectField floatingLabelText="Order number: " floatingLabelFixed={true}
+                value={this.state.selectedON} onChange={this.selectedONChange}>
+                {this.state.orders.filter(order => order.restaurant_name === this.state.selectedON).map(order => {
+                    return(<MenuItem value={order.order_num} primaryText={order.order_num}/>)
                 })}
               </SelectField>
               <Table onRowSelection={this.handleRowSelection} height = '300px'>
@@ -320,31 +352,6 @@ export default class Owner extends Component{
               <br/>
               <RaisedButton label="Complete" primary={true} onClick={this.deleteTicket}/>
             </div>
-
-            <div className = "DisplayBox">
-              <h2>Current Tickets For PickUp</h2>
-              <Table onRowSelection={this.handleRowSelection} height = '300px'>
-                <TableHeader>
-                    <TableRow>
-                      <TableHeaderColumn>Order Number</TableHeaderColumn>
-                      <TableHeaderColumn>Order Date</TableHeaderColumn>
-                      <TableHeaderColumn>Customer Email</TableHeaderColumn>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {this.state.tickets.filter(ticket=>ticket.restaurant_name===this.state.selectedRest).map((ticket, index) => {
-                        return(
-                          <TableRow key={ticket.restaurant_name} selected={this.selected}>
-                            <TableRowColumn>{ticket.order_num}</TableRowColumn>
-                            <TableRowColumn>{ticket.item_name}</TableRowColumn>
-                            <TableRowColumn>{ticket.item_quantity}</TableRowColumn>
-                          </TableRow>
-                        )
-                    })}
-                  </TableBody>
-              </Table>
-            </div>
-
           </div>
 
 
