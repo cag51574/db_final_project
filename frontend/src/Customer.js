@@ -38,6 +38,7 @@ export default class Customer extends Component{
         selectedRest: true,
         restList: [],
         itemList: [],
+        orders: {},
         deselectOnClickaway: false,
         displaySelectAll: false,
         finalText: null,
@@ -61,9 +62,12 @@ export default class Customer extends Component{
 
   selectedRestChange = (event, index, value) => {
     const target = event.target;
+    var orders = {};
+    this.menus.filter(menu => menu.restaurant_name === value).forEach(menu => orders[menu] = 0);
     this.setState({
-      selectedRest : value
-    });
+      selectedRest: value,
+      orders: orders
+    );
   }
 
   //select menu items
@@ -111,9 +115,13 @@ export default class Customer extends Component{
             <Table onRowSelection={this.handleRowSelection}
               height = '300px'
               multiSelectable = "false"
+              selectable={false}
+
             >
               <TableHeader
                   displaySelectAll = {this.state.displaySelectAll}
+                  displaySelectAll={true}
+                  adjustForCheckbox={true}
               >
                   <TableRow>
                     <TableHeaderColumn>Restaurant Name</TableHeaderColumn>
@@ -130,7 +138,7 @@ export default class Customer extends Component{
                           <TableRowColumn>{menu.item_name}</TableRowColumn>
                           <TableRowColumn>{menu.price}</TableRowColumn>
                           <TableRowColumn>
-                            <TextField onChange={this.handleTextChange} name={this.item_name}></TextField>
+                          <TextField onChange={this.updateOrder} name={this.item_name}></TextField>
                           </TableRowColumn>
                         </TableRow>
                       )
