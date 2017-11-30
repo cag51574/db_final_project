@@ -1,6 +1,7 @@
 package controllers;
 
 import play.mvc.*;
+import java.util.Date;
 
 // Play Imports
 import javax.inject.Inject;
@@ -14,46 +15,43 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 // Our Imports
-import repository.InventoryRepository;
+import repository.TicketRepository;
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
  */
-public class InventoryController extends Controller {
+public class TicketController extends Controller {
 
-    private final InventoryRepository inventoryRepository;
+    private final TicketRepository ticketRepository;
     private final HttpExecutionContext httpExecutionContext;
 
     @Inject
-    public InventoryController(InventoryRepository inventoryRepository,
+    public TicketController(TicketRepository ticketRepository,
                           HttpExecutionContext httpExecutionContext) {
-        this.inventoryRepository = inventoryRepository;
+        this.ticketRepository = ticketRepository;
         this.httpExecutionContext = httpExecutionContext;
     }
 
 
     public Result all() {
-        return ok(Json.toJson(inventoryRepository.all()));
+        return ok(Json.toJson(ticketRepository.all()));
     }
 
     public Result byRestaurant(String name) {
-        return ok(Json.toJson(inventoryRepository.byRestaurant(name)));
+        return ok(Json.toJson(ticketRepository.byRestaurant(name)));
     }
 
-    public Result new_item(String restaurant_name, String ingredient_name, String quantity, String unit) {
-        if (restaurant_name == null) {
-            return badRequest("Missing restaurant name.");
+    public Result new_item(String order_num, String email, String date) {
+        if (order_num == null) {
+            return badRequest("Missing order number.");
         }
-        if (ingredient_name == null) {
-            return badRequest("Missing ingredient name.");
+        if (email == null) {
+            return badRequest("Missing email.");
         }
-        if (quantity == null) {
-            return badRequest("Missing quantity.");
+        if (date == null) {
+            return badRequest("Missing date.");
         }
-        if (unit == null) {
-            return badRequest("Missing unit.");
-        }
-        inventoryRepository.new_item(restaurant_name, ingredient_name, Integer.parseInt(quantity), unit);
+        ticketRepository.new_item(Integer.parseInt(order_num), email, new Date());
         return ok();
     }
 
@@ -69,7 +67,7 @@ public class InventoryController extends Controller {
     }
 
     public CompletionStage<Result> inventories() {
-        return inventoryRepository.all().thenApplyAsync(list -> ok(Json.toJson(list)), httpExecutionContext.current());
+        return ticketRepository.all().thenApplyAsync(list -> ok(Json.toJson(list)), httpExecutionContext.current());
     }
     */
     /**

@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import io.ebean.*;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 // Account entity which is managed by Ebean.
 @Entity
@@ -23,6 +26,15 @@ public class User extends Model {
     public String password_digest;
 
     public static Finder<String, User> find = new Finder<>(User.class);
+
+    public static String create_digest(String password) {
+        try {
+            return new String(MessageDigest.getInstance("SHA-512").digest(password.getBytes("UTF-8")));
+        }
+        catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            return "DIDNTWORK";
+        }
+    }
 
     public String getEmailAddress() {
         return email;

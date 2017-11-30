@@ -33,7 +33,7 @@ public class IngredientRepository {
         return ebeanServer.find(Ingredient.class).where().eq("restaurant_name", restaurant).eq("item_name", item).findList();
     }
 
-    public void new_ingredient (String restaurant_name, String item_name, String ingredient_name, int portion, String unit) {
+    public void new_ingredient (String restaurant_name, String item_name, String ingredient_name, Double portion, String unit) {
         Ingredient ingredient = new Ingredient();
         ingredient.restaurant_name = restaurant_name;
         ingredient.item_name = item_name;
