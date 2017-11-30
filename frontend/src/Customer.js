@@ -112,13 +112,10 @@ export default class Customer extends Component{
             <Table onRowSelection={this.handleRowSelection}
               height = '300px'
               multiSelectable = "false"
-              selectable={false}
 
             >
               <TableHeader
                   displaySelectAll = {this.state.displaySelectAll}
-                  displaySelectAll={true}
-                  adjustForCheckbox={true}
               >
                   <TableRow>
                     <TableHeaderColumn>Restaurant Name</TableHeaderColumn>
