@@ -234,7 +234,7 @@ export default class Owner extends Component{
         <h1 className='Header'>Owner Homepage</h1>
 
 
-        <h2>Current Orders on Ticket</h2>
+        <h2>Manage Orders</h2>
         <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
           value={this.state.selectedRest} onChange={this.selectedRestChange}>
           {this.state.restaurants.map(restaurant => {
@@ -254,12 +254,12 @@ export default class Owner extends Component{
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {this.state.tickets.filter(ticket=>ticket.restaurant_name===this.state.selectedRest).map((ticket, index) => {
+                    {this.state.tickets.map((ticket, index) => {
                         return(
                           <TableRow key={ticket.restaurant_name} selected={this.selected}>
                             <TableRowColumn>{ticket.order_num}</TableRowColumn>
-                            <TableRowColumn>{ticket.item_name}</TableRowColumn>
-                            <TableRowColumn>{ticket.item_quantity}</TableRowColumn>
+                            <TableRowColumn>{ticket.order_date}</TableRowColumn>
+                            <TableRowColumn>{ticket.email}</TableRowColumn>
                           </TableRow>
                         )
                     })}
@@ -268,10 +268,10 @@ export default class Owner extends Component{
             </div>
 
             <div className = "OrderBox">
-              <h2>Current Orders</h2>
+              <h2>Current Orders on Ticket</h2>
               <SelectField floatingLabelText="Order number: " floatingLabelFixed={true}
                 value={this.state.selectedON} onChange={this.selectedONChange}>
-                {this.state.orders.filter(order => order.restaurant_name === this.state.selectedON).map(order => {
+                {this.state.orders.filter(order => order.restaurant_name === this.state.selectedRest).map(order => {
                     return(<MenuItem value={order.order_num} primaryText={order.order_num}/>)
                 })}
               </SelectField>
@@ -284,7 +284,7 @@ export default class Owner extends Component{
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {this.state.orders.filter(order=>order.restaurant_name===this.state.selectedRest).map((order, index) => {
+                    {this.state.orders.filter(order=>order.restaurant_name===this.state.selectedRest&&order.order_num===this.state.selectedON).map((order, index) => {
                         return(
                           <TableRow key={order.restaurant_name} selected={this.selected}>
                             <TableRowColumn>{order.order_num}</TableRowColumn>
