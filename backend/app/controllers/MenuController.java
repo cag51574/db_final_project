@@ -40,22 +40,18 @@ public class MenuController extends Controller {
         return ok(Json.toJson(menuRepository.byRestaurant(name)));
     }
 
-    public Result new_item() {
-        JsonNode json = request().body().asJson();
-        String restaurant_name = json.findPath("restaurant_name").textValue();
-        String item_name = json.findPath("item_name").textValue();
-        int price = json.findPath("price").intValue();
+    public Result new_item(String restaurant_name, String item_name, String price) {
         if (restaurant_name == null) {
             return badRequest("Missing restaurant name.");
         }
         if (item_name == null) {
             return badRequest("Missing item name.");
         }
-        if (price == 0) {
+        if (price == null) {
             return badRequest("Missing price.");
         }
 
-        menuRepository.new_item(restaurant_name, item_name, price);
+        menuRepository.new_item(restaurant_name, item_name, Integer.parseInt(price));
         return ok();
     }
 }

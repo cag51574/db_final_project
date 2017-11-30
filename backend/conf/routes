@@ -21,6 +21,7 @@ GET /ingredient                     controllers.IngredientController.all
 GET /ingredient/:restaurant/:item   controllers.IngredientController.byRestaurantAndItem(restaurant, item)
 
 GET /login/:email/:password         controllers.SecurityController.login(email, password)
+
 GET /signup/:email/:password/:full_name             controllers.SecurityController.signup(email, password, full_name)
 
 GET /inventory/new/:restaurant_name/:ingredient_name/:quantity/:unit                controllers.InventoryController.new_item(restaurant_name,ingredient_name,quantity,unit)
@@ -29,3 +30,4 @@ GET /ingredient/new/:restaurant_name/:item_name/:ingredient_name/:quantity/:unit
 
 GET /restaurant/new/:name/:location/:phone/:auth_token  controllers.RestaurantController.newRestaurant(name, location, phone, auth_token)
 GET /restaurant/delete/:name        controllers.RestaurantController.deleteRestaurant(name)
+
