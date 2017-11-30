@@ -41,7 +41,7 @@ export default class Customer extends Component{
         orders: {},
         deselectOnClickaway: false,
         displaySelectAll: false,
-        finalText: null
+        finalText: null,
       };
       this.handleRowSelection = this.handleRowSelection.bind(this);
   }
@@ -84,7 +84,20 @@ export default class Customer extends Component{
   }
 
   placeOrder = () => {
-    console.warn(this.state.restList, this.state.itemList)
+    var order_number = parseInt(Math.random() * 1000);
+    fetch("http://localhost:9000/ticket/new/" + order_number + '/' + this.props.auth_token)
+      .then(response => {
+        //do something with response
+        response.json().then( order_number => {
+          this.setState({ order_number: order_number });
+        });
+      })
+      .catch(err => {
+        console.warn('ERROR');
+    });
+    for(var i = 0; i<this.state.restList.length ;i++){
+      fetch("http://localhost:9000/order/new/" + order_number + '/' + this.state.restList[i] + '/' + this.state.itemList[i]);
+    }
   };
 
     render() {

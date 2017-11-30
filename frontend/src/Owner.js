@@ -166,6 +166,19 @@ export default class Owner extends Component{
     });
   }
 
+  deleteTicket = () => {
+    var url = this.state.urlHeader + 'ticket/delete/' + this.state.selectedON;
+    fetch(url)
+      .then(response => {
+        //do something with response
+        response.json().then(ingredients => {
+        });
+      })
+      .catch(err => {
+        console.warn('ERROR');
+    });
+  }
+
   constructor(props){
       super(props);
       this.state = {
@@ -265,7 +278,7 @@ export default class Owner extends Component{
         <h1 className='Header'>Owner Homepage</h1>
 
 
-        <h2>Current Orders</h2>
+        <h2>Current Orders on Ticket</h2>
         <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
           value={this.state.selectedRest} onChange={this.selectedRestChange}>
           {this.state.restaurants.map(restaurant => {
@@ -334,6 +347,12 @@ export default class Owner extends Component{
           <div className='FormRow'>
             <div className = "FormBox">
               <h2>Mark Ticket as Picked Up</h2>
+              <SelectField floatingLabelText="Order number: " floatingLabelFixed={true}
+                value={this.state.selectedON} onChange={this.selectedONChange}>
+                {this.state.orders.filter(order => order.restaurant_name === this.state.selectedON).map(order => {
+                    return(<MenuItem value={order.order_num} primaryText={order.order_num}/>)
+                })}
+              </SelectField>
               <br/>
               <RaisedButton label="Complete" primary={true} onClick={this.deleteTicket}/>
             </div>
