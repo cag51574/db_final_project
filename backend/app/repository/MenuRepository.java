@@ -32,4 +32,12 @@ public class MenuRepository {
     public List<Menu> byRestaurant(String name) {
         return ebeanServer.find(Menu.class).where().eq("restaurant_name", name).setDistinct(true).findList();
     }
+
+    public void new_item(String restaurant_name, String item_name, int price) {
+        Inventory inventory = new Inventory();
+        inventory.restaurant_name = restaurant_name;
+        inventory.ingredient_name = ingredient_name;
+        inventory.price = price;
+        ebeanServer.save(inventory);
+    }
 }

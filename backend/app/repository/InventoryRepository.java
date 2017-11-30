@@ -8,7 +8,6 @@ import play.db.ebean.EbeanConfig;
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 import java.util.List;
-import com.fasterxml.jackson.databind.JsonNode;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
@@ -42,6 +41,5 @@ public class InventoryRepository {
         inventory.quantity = quantity;
         inventory.unit = unit;
         ebeanServer.save(inventory);
-        // return ebeanServer.find(Inventory.class).findList();
     }
 }

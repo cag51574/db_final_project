@@ -126,7 +126,7 @@ export default class Owner extends Component{
 
   //add Ingredient for menu item
   addIngredient() {
-    fetch("https://localhost:9000/menuItem/new"),{
+    fetch("https://localhost:9000/ingredient/new"),{
       method:'POST',
       headers:{
         'Accept': 'application/json',
@@ -137,6 +137,7 @@ export default class Owner extends Component{
         item_name : this.selectedItemName,
         ingredient_name : this.selectedIngredient,
         portion : this.newIngredientPortion
+        unit: this.newIngredientUnit
       }
       .then(
         this.setState({selectReset: null})
