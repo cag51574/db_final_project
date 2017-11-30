@@ -62,11 +62,8 @@ export default class Customer extends Component{
 
   selectedRestChange = (event, index, value) => {
     const target = event.target;
-    var orders = {};
-    this.menus.filter(menu => menu.restaurant_name === value).forEach(menu => orders[menu] = 0);
     this.setState({
-      selectedRest: value,
-      orders: orders
+      selectedRest: value
     });
   }
 
