@@ -52,7 +52,7 @@ export default class Owner extends Component{
         console.warn('ERROR');
     });
 
-    /*fetch("http://localhost:9000/order")
+    fetch("http://localhost:9000/order")
       .then(response => {
         //do something with response
         response.json().then(orders => {
@@ -72,7 +72,7 @@ export default class Owner extends Component{
       })
       .catch(err => {
         console.warn('ERROR');
-    });*/
+    });
   }
 
   //create restaurant
