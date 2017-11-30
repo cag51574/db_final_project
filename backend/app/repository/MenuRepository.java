@@ -34,10 +34,10 @@ public class MenuRepository {
     }
 
     public void new_item(String restaurant_name, String item_name, int price) {
-        Inventory inventory = new Inventory();
-        inventory.restaurant_name = restaurant_name;
-        inventory.ingredient_name = ingredient_name;
-        inventory.price = price;
-        ebeanServer.save(inventory);
+        Menu menu= new Menu();
+        menu.restaurant_name = restaurant_name;
+        menu.item_name = item_name;
+        menu.price = price;
+        ebeanServer.save(menu);
     }
 }

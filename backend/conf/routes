@@ -26,6 +26,5 @@ GET /login/:email/:password                         controllers.SecurityControll
 POST /inventory/new                 controllers.InventoryController.new_item
 POST /menuItem/new                  controllers.MenuController.new_item
 POST /ingredient/new                controllers.IngredientController.new_ingredient
-POST /restaurant/new                controllers.RestaurantController.new_restaurant
 
 

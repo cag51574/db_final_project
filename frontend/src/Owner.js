@@ -137,7 +137,6 @@ export default class Owner extends Component{
         item_name : this.selectedItemName,
         ingredient_name : this.selectedIngredient,
         portion : this.newIngredientPortion
-        unit: this.newIngredientUnit
       }
       .then(
         this.setState({selectReset: null})

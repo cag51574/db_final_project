@@ -34,12 +34,12 @@ public class IngredientRepository {
     }
 
     public void new_ingredient (String restaurant_name, String item_name, String ingredient_name, int portion, String unit) {
-        Ingredient ingredient = new Ingredient;
+        Ingredient ingredient = new Ingredient();
         ingredient.restaurant_name = restaurant_name;
         ingredient.item_name = item_name;
         ingredient.ingredient_name = ingredient_name;
         ingredient.portion = portion;
         ingredient.unit = unit;
-        eBean.save(ingredient);
+        ebeanServer.save(ingredient);
     }
 }

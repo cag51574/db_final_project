@@ -42,9 +42,9 @@ public class MenuController extends Controller {
 
     public Result new_item() {
         JsonNode json = request().body().asJson();
-        String restaurant_name = json.findPath("restaurant_name").asJson();
-        String item_name = json.findPath("item_name").asJson();
-        int price = json.findPath("price").asJson();
+        String restaurant_name = json.findPath("restaurant_name").textValue();
+        String item_name = json.findPath("item_name").textValue();
+        int price = json.findPath("price").intValue();
         if (restaurant_name == null) {
             return badRequest("Missing restaurant name.");
         }
@@ -55,7 +55,7 @@ public class MenuController extends Controller {
             return badRequest("Missing price.");
         }
 
-        inventoryRepository.new_item(restaurant_name, item_name, price);
+        menuRepository.new_item(restaurant_name, item_name, price);
         return ok();
     }
 }
