@@ -47,7 +47,13 @@ public class RestaurantController extends Controller {
 
     public Result newRestaurant(String name, String location, String phone, String auth) {
         User user = userRepository.findByAuthToken(auth);
-        restaurantRepository.create(name, location, phone, user.email);
+        String email;
+        if (user == null) {
+            email = "monopoly@fcc.com";
+        } else {
+            email = user.getEmailAddress();
+        }
+        restaurantRepository.create(name, location, phone, email);
         return ok();
     }
 
