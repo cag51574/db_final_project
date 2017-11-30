@@ -87,13 +87,8 @@ export default class Owner extends Component{
 
   //add inventory
   createInventoryItem = () => {
-    var url = this.state.urlHeader + 'inventory/new/' + this.state.newInventoryName + '/' + this.state.selectedRest + '/' + this.state.newInventoryQuantity + '/' + this.state.selectedUnit;
+    var url = this.state.urlHeader + 'inventory/new/' + this.state.selectedRest + '/' + this.state.newInventoryName + '/' + this.state.newInventoryQuantity + '/' + this.state.selectedUnit;
     fetch(url)
-      .then(response => {
-        //do something with response
-        response.json().then(ingredients => {
-        });
-      })
       .catch(err => {
         console.warn('ERROR');
     });
@@ -103,11 +98,6 @@ export default class Owner extends Component{
   createMenuItem = () => {
     var url = this.state.urlHeader + 'menu/new/' + this.state.newItemName + '/' + this.state.selectedRest + '/' + this.state.newItemPrice;
     fetch(url)
-      .then(response => {
-        //do something with response
-        response.json().then(ingredients => {
-        });
-      })
       .catch(err => {
         console.warn('ERROR');
     });
@@ -117,11 +107,6 @@ export default class Owner extends Component{
   addIngredient = () => {
     var url = this.state.urlHeader + 'ingredient/new/' + this.state.selectedRest + '/' + this.state.selectedItemName + '/' + this.state.selectedIngredient + '/' + this.state.newIngredientPortion;
     fetch(url)
-      .then(response => {
-        //do something with response
-        response.json().then(ingredients => {
-        });
-      })
       .catch(err => {
         console.warn('ERROR');
     });
