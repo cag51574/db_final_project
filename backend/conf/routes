@@ -24,7 +24,7 @@ GET /login/:email/:password                         controllers.SecurityControll
 GET /signup/:email/:password/:full_name             controllers.SecurityController.signup(email, password, full_name)
 
 POST /inventory/new                 controllers.InventoryController.new_item
-POST /menuItem/new                  controllers.MenuController.new_item
+POST /menu/new                  controllers.MenuController.new_item
 POST /ingredient/new                controllers.IngredientController.new_ingredient
 
 
