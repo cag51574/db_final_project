@@ -71,111 +71,114 @@ export default class Owner extends Component{
     });*/
   }
 
-
-  getMenuItems(){
-    fetch("http://localhost:9000/menuItems/" + this.selectedRest)
+  //create restaurant
+  createRestaurant = () => {
+    var url = this.state.urlHeader + 'restaurant/new/' + this.state.newRestName + '/' + this.state.newRestLoc + '/' + this.state.newRestPhone + '/' + this.props.auth_token;
+    fetch(url)
       .then(response => {
         //do something with response
-        response.json().then(menuItems => {
-          this.setState({ menuItems: menuItems });
+        response.json().then(ingredients => {
         });
       })
       .catch(err => {
         console.warn('ERROR');
     });
   }
-  //create restaurant
-  createRestaurant() {
-    fetch("https://localhost:9000/restaurant/new"),{
-      method:'POST',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body:{
-        restaurant_name : this.newRestName,
-        restaurant_location : this.newRestLoc,
-        restaurant_phone : this.newRestPhone,
-        restaurant_owner : this.newRestOName
-      }
-      .then(
-        this.setState({selectReset: null})
-      )
-    }
-  }
 
   //add inventory
-  createInventoryItem() {
-    fetch("https://localhost:9000/inventory/new"),{
-      method:'POST',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body:{
-        restaurant_name : this.selectedRest,
-        ingredient_name : this.newInventoryName,
-        portion : this.newInventoryQuantity,
-        unit : this.selectedUnit
-      }
-      .then(
-        this.setState({selectReset: null})
-      )
-    }
+  createInventoryItem = () => {
+    var url = this.state.urlHeader + 'inventory/new/' + this.state.newInventoryName + '/' + this.state.selectedRest + '/' + this.state.newInventoryQuantity + '/' + this.state.selectedUnit;
+    fetch(url)
+      .then(response => {
+        //do something with response
+        response.json().then(ingredients => {
+        });
+      })
+      .catch(err => {
+        console.warn('ERROR');
+    });
   }
 
   //createMenuItem
-  createMenuItem() {
-    fetch("https://localhost:9000/menuItem/new"),{
-      method:'POST',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body:{
-        item_name : this.newItemName,
-        restaurant_name : this.selectedRest,
-        price : this.newItemPrice,
-      }
-      .then(
-        this.setState({selectReset: null})
-      )
-    }
+  createMenuItem = () => {
+    var url = this.state.urlHeader + 'menu/new/' + this.state.newItemName + '/' + this.state.selectedRest + '/' + this.state.newItemPrice;
+    fetch(url)
+      .then(response => {
+        //do something with response
+        response.json().then(ingredients => {
+        });
+      })
+      .catch(err => {
+        console.warn('ERROR');
+    });
   }
 
   //add Ingredient for menu item
-  addIngredient() {
-    fetch("https://localhost:9000/ingredient/new"),{
-      method:'POST',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body:{
-        restaurant_name : this.selectedRest,
-        item_name : this.selectedItemName,
-        ingredient_name : this.selectedIngredient,
-        portion : this.newIngredientPortion
-      }
-      .then(
-        this.setState({selectReset: null})
-      )
-    }
+  addIngredient = () => {
+    var url = this.state.urlHeader + 'ingredient/new/' + this.state.selectedRest + '/' + this.state.selectedItemName + '/' + this.state.selectedIngredient + '/' + this.state.newIngredientPortion;
+    fetch(url)
+      .then(response => {
+        //do something with response
+        response.json().then(ingredients => {
+        });
+      })
+      .catch(err => {
+        console.warn('ERROR');
+    });
   }
 
   //delete restaurant
-  deleteRestaurant(){
-    console.log(this.state.selectedRest)
-    fetch("https://localhost:9000/restaurant/delete"),{
-      method:'POST',
-      headers:{
-        'Accept': 'application.json',
-        'Content-Type': 'application.json',
-      },
-      body:{
-        restaurant_name: this.selectedRest
-      }
-    }
+  deleteRestaurant = () =>{
+    var url = this.state.urlHeader + 'restaurant/delete/' + this.state.selectedRest;
+    fetch(url)
+      .then(response => {
+        //do something with response
+        response.json().then(ingredients => {
+        });
+      })
+      .catch(err => {
+        console.warn('ERROR');
+    });
+  }
+
+  //delete restaurant
+  deleteInventoryItem = () =>{
+    var url = this.state.urlHeader + 'restaurant/delete/' + this.state.selectedRest + '/' + this.state.selectedInventory;
+    fetch(url)
+      .then(response => {
+        //do something with response
+        response.json().then(ingredients => {
+        });
+      })
+      .catch(err => {
+        console.warn('ERROR');
+    });
+  }
+
+  deleteMenuItem = () => {
+    var url = this.state.urlHeader + 'menu/delete/' + this.state.selectedRest + '/' + this.state.selectedItemName;
+    fetch(url)
+      .then(response => {
+        //do something with response
+        response.json().then(ingredients => {
+        });
+      })
+      .catch(err => {
+        console.warn('ERROR');
+    });
+  }
+
+  deleteIngredient = () => {
+    var url = this.state.urlHeader + 'ingredient/delete/' + this.state.selectedRest + '/' + this.state.selectedItemName + '/' + this.state.selectedIngredient;
+    fetch(url)
+      .then(response => {
+        //do something with response
+        response.json().then(ingredients => {
+        });
+      })
+      .catch(err => {
+        console.warn('ERROR');
+    });
   }
 
   constructor(props){
@@ -188,7 +191,8 @@ export default class Owner extends Component{
         selected: [],
         orders: [],
         tickets: [],
-        selectedRest: true
+        selectedRest: true,
+        urlHeader: "http://localhost:9000/"
       };
       this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -225,6 +229,20 @@ export default class Owner extends Component{
     const target = event.target;
     this.setState({
       selectedInventory : value
+    });
+  }
+
+  selectedIngredientChange = (event, index, value) => {
+    const target = event.target;
+    this.setState({
+      selectedIngredient : value
+    });
+  }
+
+  selectedMenuItemChange = (event, index, value) => {
+    const target = event.target;
+    this.setState({
+      selectedMenuItem : value
     });
   }
 
@@ -336,7 +354,7 @@ export default class Owner extends Component{
         <div className='FormRow'>
           <div className = "FormBox">
             <h2>Create Restaurant</h2>
-            <form onSubmit={this.createRestaurant}>
+            <form>
               <TextField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
                 onChange={this.handleChange} name='newRestName'/>
               <br/>
@@ -346,7 +364,7 @@ export default class Owner extends Component{
               <TextField floatingLabelText="Restaurant Phone Number: " floatingLabelFixed={true}
                 onChange={this.handleChange} name="newRestPhone"/>
               <br/>
-              <RaisedButton type='submit' label="Submit" primary={true}/>
+              <RaisedButton onClick={this.createRestaurant} label="Submit" primary={true}/>
             </form>
           </div>
 
@@ -393,7 +411,7 @@ export default class Owner extends Component{
         <div className='FormRow'>
           <div className = "FormBox">
             <h2>Add Inventory Item</h2>
-            <form onSubmit={this.createInventory}>
+            <form>
               <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
                 value={this.state.selectedRest} onChange={this.selectedRestChange}>
                 {this.state.restaurants.map(restaurant => {
@@ -417,7 +435,7 @@ export default class Owner extends Component{
                 <MenuItem value={'Slice'} primaryText="Slice"/>
               </SelectField>
               <br/>
-              <RaisedButton type='submit' label="Submit" primary={true}/>
+              <RaisedButton onClick={this.createInventoryItem} label="Submit" primary={true}/>
             </form>
           </div>
 
@@ -454,7 +472,7 @@ export default class Owner extends Component{
           </div>
 
           <div className = "FormBox">
-            <h2>Remove Inventory Object</h2>
+            <h2>Remove Inventory Item</h2>
             <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
               value={this.state.selectedRest} onChange={this.selectedRestChange}>
               {this.state.restaurants.map(restaurant => {
@@ -464,11 +482,11 @@ export default class Owner extends Component{
             <br/>
             <SelectField floatingLabelText="Inventory Item: " floatingLabelFixed={true}
               value={this.state.selectedInventory} onChange={this.selectedInventoryChange}>
-              {this.state.inventorys.map(inventory => {
+              {this.state.inventorys.filter(inventory=>inventory.restaurant_name===this.state.selectedRest).map(inventory => {
                   return(<MenuItem value={inventory.ingredient_name} primaryText={inventory.ingredient_name}/>)
               })}
             </SelectField>
-            <RaisedButton label="Delete" primary={true}/>
+            <RaisedButton onClick = {this.deleteInventoryItem} label="Delete" primary={true}/>
           </div>
         </div>
 
@@ -477,7 +495,7 @@ export default class Owner extends Component{
 
           <div className = "FormBox">
             <h2>Add Menu Item</h2>
-            <form onSubmit={this.createMenuItem}>
+            <form>
               <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
                 value={this.state.selectedRest} onChange={this.selectedRestChange}>
                 {this.state.restaurants.map(restaurant => {
@@ -491,7 +509,7 @@ export default class Owner extends Component{
               <TextField floatingLabelText="Price: " floatingLabelFixed={true}
                 onChange={this.handleChange} name='newItemPrice'/>
               <br/>
-              <RaisedButton type='submit' label="Submit" primary={true}/>
+              <RaisedButton onClick={this.createMenuItem} label="Submit" primary={true}/>
             </form>
           </div>
 
@@ -528,14 +546,13 @@ export default class Owner extends Component{
               })}
             </SelectField>
             <SelectField floatingLabelText="Menu Item: " floatingLabelFixed={true}
-              value={this.state.value}
-              onChange={this.handleChange}>
-              {this.state.menuItems.map(menuItem => {
+              value={this.state.selectedMenuItem} onChange={this.selectedMenuItemChange}>
+              {this.state.menuItems.filter(menuItem=>menuItem.restaurant_name===this.state.selectedRest).map(menuItem => {
                   return(<MenuItem value={menuItem.item_name} primaryText={menuItem.item_name}/>)
               })}
             </SelectField>
             <br/>
-            <RaisedButton label="Delete" primary={true}/>
+            <RaisedButton onClick={this.deleteMenuItem} label="Delete" primary={true}/>
           </div>
         </div>
 
@@ -543,7 +560,7 @@ export default class Owner extends Component{
         <div className='FormRow'>
           <div className = "FormBox">
             <h2>Add Menu Item Ingredient</h2>
-            <form onSubmit={this.createIngredient}>
+            <form>
               <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
                 value={this.state.selectedRest} onChange={this.selectedRestChange}>
                 {this.state.restaurants.map(restaurant => {
@@ -552,10 +569,9 @@ export default class Owner extends Component{
               </SelectField>
               <br/>
               <SelectField floatingLabelText="Menu Item: " floatingLabelFixed={true}
-                value={this.state.value}
-                onChange={this.handleChange}>
-                {this.state.restaurants.map(restaurant => {
-                    return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
+                value={this.state.selectedMenuItem} onChange={this.selectedMenuItemChange}>
+                {this.state.menuItems.filter(menuItem=>menuItem.restaurant_name===this.state.selectedRest).map(menuItem => {
+                    return(<MenuItem value={menuItem.item_name} primaryText={menuItem.item_name}/>)
                 })}
               </SelectField>
               <br/>
@@ -581,7 +597,7 @@ export default class Owner extends Component{
                 <MenuItem value={6} primaryText="Slice"/>
               </SelectField>
               <br/>
-              <RaisedButton label="Submit" primary={true}/>
+              <RaisedButton onSubmit={this.createIngredient} label="Submit" primary={true}/>
             </form>
           </div>
 
@@ -623,13 +639,19 @@ export default class Owner extends Component{
             </SelectField>
             <br/>
             <SelectField floatingLabelText="Menu Item: " floatingLabelFixed={true}
-              value={this.state.value}
-              onChange={this.handleChange}>
-              {this.state.restaurants.map(restaurant => {
-                  return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
+              value={this.state.selectedMenuItem} onChange={this.selectedMenuItemChange}>
+              {this.state.menuItems.filter(menuItem=>menuItem.restaurant_name===this.state.selectedRest).map(menuItem => {
+                  return(<MenuItem value={menuItem.item_name} primaryText={menuItem.item_name}/>)
               })}
             </SelectField>
-            <RaisedButton label="Delete" primary={true}/>
+            <br/>
+            <SelectField floatingLabelText="Ingredient Name: " floatingLabelFixed={true}
+              value={this.state.selectedIngredient} onChange={this.selectedIngredientChange}>
+              {this.state.ingredients.filter(ingredient => ingredient.item_name===this.state.selectedMenuItem).map(ingredient => {
+                  return(<MenuItem value={ingredient.ingredient_name} primaryText={ingredient.ingredient_name}/>)
+              })}
+            </SelectField>
+            <RaisedButton onClick = {this.deleteIngredient} label="Delete" primary={true}/>
           </div>
         </div>
 
