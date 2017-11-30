@@ -10,6 +10,8 @@ import java.util.concurrent.CompletionStage;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import models.User;
+import repository.UserRepository;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 /**
@@ -37,6 +39,23 @@ public class RestaurantRepository {
 
     public CompletionStage<List<String>> allNames() {
         return supplyAsync(() -> ebeanServer.find(Restaurant.class).findList().stream().map(r -> r.restaurant_name).collect(Collectors.toList()), executionContext);
+    }
+
+
+    public void create(String name, String location, String phone, String email){
+        Restaurant r = new Restaurant();
+        r.restaurant_name = name;
+        r.location = location;
+        r.restaurant_phone = phone;
+        r.email = email;
+        ebeanServer.save(r);
+    }
+
+    public void delete(String name){
+        Restaurant r = ebeanServer.find(Restaurant.class).where().eq("restaurant_name", name).findUnique();
+        if(r != null){
+            ebeanServer.deletePermanent(r);
+        }
     }
     /*
     public CompletionStage<Map<String, String>> options() {

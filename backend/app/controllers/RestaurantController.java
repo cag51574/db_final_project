@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 
 // Our Imports
 import repository.RestaurantRepository;
+import repository.UserRepository;
+import models.User;
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
@@ -22,13 +24,15 @@ import repository.RestaurantRepository;
 public class RestaurantController extends Controller {
 
     private final RestaurantRepository restaurantRepository;
+    private final UserRepository userRepository;
     private final HttpExecutionContext httpExecutionContext;
 
     @Inject
-    public RestaurantController(RestaurantRepository restaurantRepository,
+    public RestaurantController(RestaurantRepository restaurantRepository, UserRepository userRepository,
                           HttpExecutionContext httpExecutionContext) {
         this.restaurantRepository = restaurantRepository;
         this.httpExecutionContext = httpExecutionContext;
+        this.userRepository = userRepository;
     }
 
     public Result restaurants() {
@@ -39,7 +43,25 @@ public class RestaurantController extends Controller {
         return ok(Json.toJson(restaurantRepository.byName(name)));
     }
 
-    
+
+
+    public Result newRestaurant(String name, String location, String phone, String auth) {
+        User user = userRepository.findByAuthToken(auth);
+        String email;
+        if (user == null) {
+            email = "monopoly@fcc.com";
+        } else {
+            email = user.getEmailAddress();
+        }
+        restaurantRepository.create(name, location, phone, email);
+        return ok();
+    }
+
+    public Result deleteRestaurant(String name){
+        restaurantRepository.delete(name);
+        return ok();
+    }
+
     /*
     public CompletionStage<Result> restaurants() {
         return restaurantRepository.all().thenApplyAsync(list -> {

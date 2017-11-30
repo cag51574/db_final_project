@@ -28,6 +28,10 @@ GET /menu/new/:restaurant_name/:item_name/:price                  controllers.Me
 GET /ingredient/new/:restaurant_name/:item_name/:ingredient_name/:quantity/:unit                controllers.IngredientController.new_ingredient(restaurant_name,item_name,ingredient_name,quantity,unit)
 
 
+GET /restaurant/new/:name/:location/:phone/:auth_token  controllers.RestaurantController.newRestaurant(name, location, phone, auth_token)
+GET /restaurant/delete/:name        controllers.RestaurantController.deleteRestaurant(name)
+
+
 GET /order  controllers.OrderController.all
 GET /order/:restaurant_name controllers.OrderController.byRestaurant(restaurant_name)
 GET /order/new/:order_num/:restaurant_name/:item_name controllers.OrderController.new_item(order_num, restaurant_name, item_name)
@@ -35,3 +39,4 @@ GET /order/new/:order_num/:restaurant_name/:item_name controllers.OrderControlle
 GET /ticket controllers.TicketController.all
 GET /ticket/:restaurant_name controllers.TicketController.byRestaurant(restaurant_name)
 GET /ticket/new/:order_num/:auth_token controllers.TicketController.new_item(order_num, auth_token)
+
