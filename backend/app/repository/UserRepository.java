@@ -29,6 +29,19 @@ public class UserRepository {
         return ebeanServer.find(User.class).where().eq("auth_token", auth_token).findUnique();
     }
 
+    public User findByEmail(String email) {
+        return ebeanServer.find(User.class).where().eq("email", email).findUnique();
+    }
+
+    public User create(String email, String password, String full_name) {
+        User user = new User();
+        user.email = email;
+        user.password_digest = User.create_digest(password);
+        user.full_name = full_name;
+        ebeanServer.save(user);
+        return user;
+    }
+
     public CompletionStage<User> findByEmailAddressAndPassword(String emailAddress, String password) {
         return supplyAsync(() -> ebeanServer.find(User.class).where().eq("email", emailAddress.toLowerCase()).eq("password_digest", password).findUnique(), executionContext);
     }

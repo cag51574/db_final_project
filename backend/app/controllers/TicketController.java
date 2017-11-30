@@ -1,6 +1,7 @@
 package controllers;
 
 import play.mvc.*;
+import java.util.Date;
 
 // Play Imports
 import javax.inject.Inject;
@@ -14,45 +15,43 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 // Our Imports
-import repository.RestaurantRepository;
-import repository.UserRepository;
-import models.User;
+import repository.TicketRepository;
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
  */
-public class RestaurantController extends Controller {
+public class TicketController extends Controller {
 
-    private final RestaurantRepository restaurantRepository;
-    private final UserRepository userRepository;
+    private final TicketRepository ticketRepository;
     private final HttpExecutionContext httpExecutionContext;
 
     @Inject
-    public RestaurantController(RestaurantRepository restaurantRepository, UserRepository userRepository,
+    public TicketController(TicketRepository ticketRepository,
                           HttpExecutionContext httpExecutionContext) {
-        this.restaurantRepository = restaurantRepository;
+        this.ticketRepository = ticketRepository;
         this.httpExecutionContext = httpExecutionContext;
-        this.userRepository = userRepository;
-    }
-
-    public Result restaurants() {
-        return ok(Json.toJson(restaurantRepository.all()));
-    }
-
-    public Result restaurant(String name) {
-        return ok(Json.toJson(restaurantRepository.byName(name)));
     }
 
 
-
-    public Result newRestaurant(String name, String location, String phone, String auth) {
-        User user = userRepository.findByAuthToken(auth);
-        restaurantRepository.create(name, location, phone, user.email);
-        return ok();
+    public Result all() {
+        return ok(Json.toJson(ticketRepository.all()));
     }
 
-    public Result deleteRestaurant(String name){
-        restaurantRepository.delete(name);
+    public Result byRestaurant(String name) {
+        return ok(Json.toJson(ticketRepository.byRestaurant(name)));
+    }
+
+    public Result new_item(String order_num, String email, String date) {
+        if (order_num == null) {
+            return badRequest("Missing order number.");
+        }
+        if (email == null) {
+            return badRequest("Missing email.");
+        }
+        if (date == null) {
+            return badRequest("Missing date.");
+        }
+        ticketRepository.new_item(Integer.parseInt(order_num), email, new Date());
         return ok();
     }
 
@@ -68,7 +67,7 @@ public class RestaurantController extends Controller {
     }
 
     public CompletionStage<Result> inventories() {
-        return inventoryRepository.all().thenApplyAsync(list -> ok(Json.toJson(list)), httpExecutionContext.current());
+        return ticketRepository.all().thenApplyAsync(list -> ok(Json.toJson(list)), httpExecutionContext.current());
     }
     */
     /**

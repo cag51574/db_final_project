@@ -41,13 +41,7 @@ public class IngredientController extends Controller {
         return ok(Json.toJson(ingredientRepository.byRestaurantAndItem(restaurant, item)));
     }
 
-    public Result new_ingredient() {
-        JsonNode json = request().body().asJson();
-        String restaurant_name = json.findPath("restaurant_name").textValue();
-        String item_name = json.findPath("item_name").textValue();
-        String ingredient_name = json.findPath("ingredient_name").textValue();
-        int quantity = json.findPath("portion").intValue();
-        String unit = json.findPath("unit").textValue();
+    public Result new_ingredient(String restaurant_name, String item_name, String ingredient_name, String portion, String unit) {
         if (restaurant_name == null) {
             return badRequest("Missing restaurant name.");
         }
@@ -57,14 +51,14 @@ public class IngredientController extends Controller {
         if (ingredient_name == null) {
             return badRequest("Missing ingredient name.");
         }
-        if (quantity == 0) {
+        if (portion == null) {
             return badRequest("Missing quantity.");
         }
         if (unit == null) {
             return badRequest("Missing unit.");
         }
 
-        ingredientRepository.new_ingredient(restaurant_name, item_name, ingredient_name, quantity, unit);
+        ingredientRepository.new_ingredient(restaurant_name, item_name, ingredient_name, Double.parseDouble(portion), unit);
         return ok();
     }
 

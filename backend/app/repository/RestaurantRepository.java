@@ -10,6 +10,8 @@ import java.util.concurrent.CompletionStage;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import models.User;
+import repository.UserRepository;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 /**
@@ -51,10 +53,7 @@ public class RestaurantRepository {
 
     public void delete(String name){
         Restaurant r = ebeanServer.find(Restaurant.class).where().eq("restaurant_name", name).findUnique();
-        if(r == null){
-            return badRequest("Restaurant does not exist");
-        }
-        else {
+        if(r != null){
             ebeanServer.deletePermanent(r);
         }
     }
