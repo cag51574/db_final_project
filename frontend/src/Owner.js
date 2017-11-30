@@ -26,17 +26,6 @@ export default class Owner extends Component{
         });
       })
       .catch(err => console.warn('error'));
-    fetch("http://localhost:9000/inventories")
-      .then(response => {
-        //do something with response
-        response.json().then(inventories => {
-          this.setState({ inventories: inventories });
-        });
-      })
-      .catch(err => {
-        console.warn('ERROR');
-    });
-
     fetch("http://localhost:9000/menu")
       .then(response => {
         //do something with response
@@ -193,7 +182,7 @@ export default class Owner extends Component{
       super(props);
       this.state = {
         restaurants:[],
-        inventories:[],
+        inventorys:[],
         menuItems:[],
         ingredients:[],
         selected: [],
@@ -475,7 +464,7 @@ export default class Owner extends Component{
             <br/>
             <SelectField floatingLabelText="Inventory Item: " floatingLabelFixed={true}
               value={this.state.selectedInventory} onChange={this.selectedInventoryChange}>
-              {this.state.inventories.map(inventory => {
+              {this.state.inventorys.map(inventory => {
                   return(<MenuItem value={inventory.ingredient_name} primaryText={inventory.ingredient_name}/>)
               })}
             </SelectField>

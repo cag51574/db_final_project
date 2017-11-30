@@ -3,8 +3,6 @@ import './Global.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {RaisedButton, TextField, SelectField, MenuItem,Table,TableRowColumn,TableHeaderColumn,TableBody,TableHeader,TableRow} from 'material-ui';
 import Home from './Home';
-import Owner from './Owner';
-import Customer from './Customer';
 import Login from './Login';
 
 export default class Main extends Component {
