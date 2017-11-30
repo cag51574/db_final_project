@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom'
 import './Global.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {Dialog, Tabs, Tab, RaisedButton, TextField, SelectField, MenuItem,Table,TableRowColumn,TableHeaderColumn,TableBody,TableHeader,TableRow} from 'material-ui';
+import {Dialog, Tabs, Tab, RaisedButton, TextField, SelectField, MenuItem,Table, TableRowColumn,TableHeaderColumn,TableBody,TableHeader,TableRow} from 'material-ui';
 
 export default class Login extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export default class Login extends Component {
       .catch(e => this.setState({error: e.message}));
   }
 
-  signup(email, password, full_name) {
+  signup = (email, password, full_name) => {
     fetch("http://localhost:9000/signup/" + email + "/" + password + "/" + full_name)
       .then(response => {
         if (response.status === 200) {
@@ -37,7 +37,6 @@ export default class Login extends Component {
         }
       })
       .catch(e => this.setState({error: e.message}));
-      
   }
 
 
@@ -72,7 +71,7 @@ export default class Login extends Component {
         <TextField floatingLabelText="Password: " floatingLabelFixed={true}
       onChange={e => this.setState({password: e.target.value})} type="password" name="password"/>
         <br/>
-        <RaisedButton label="Sign Up" primary={true} onClick={this.signup} />
+        <RaisedButton label="Sign Up" primary={true} onClick={_ => this.signup(this.state.email, this.state.password, this.state.full_name)} />
         </form>
         </div>
 
