@@ -227,6 +227,29 @@ export default class Owner extends Component{
       });
       console.log(selectedRows,this.state.restaurants[selectedRows]);
   };
+  /*<div className = "OrderBox">
+    <h2>Current Tickets For PickUp</h2>
+    <Table onRowSelection={this.handleRowSelection} height = '300px'>
+      <TableHeader>
+          <TableRow>
+            <TableHeaderColumn>Order Number</TableHeaderColumn>
+            <TableHeaderColumn>Order Date</TableHeaderColumn>
+            <TableHeaderColumn>Customer Email</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {this.state.tickets.filter(ticket => ticket.restaurant_name === this.state.selectedRest).map((ticket, index) => {
+              return(
+                <TableRow key={ticket.restaurant_name} selected={this.selected}>
+                  <TableRowColumn>{ticket.order_num}</TableRowColumn>
+                  <TableRowColumn>{ticket.order_date}</TableRowColumn>
+                  <TableRowColumn>{ticket.email}</TableRowColumn>
+                </TableRow>
+              )
+          })}
+        </TableBody>
+    </Table>
+  </div>*/
   render() {
     return(
       <MuiThemeProvider>
@@ -242,24 +265,23 @@ export default class Owner extends Component{
           })}
         </SelectField>
           <div className='FormRow'>
-
             <div className = "OrderBox">
-              <h2>Current Tickets For PickUp</h2>
+              <h2>Restaurant Orders</h2>
               <Table onRowSelection={this.handleRowSelection} height = '300px'>
                 <TableHeader>
                     <TableRow>
                       <TableHeaderColumn>Order Number</TableHeaderColumn>
-                      <TableHeaderColumn>Order Date</TableHeaderColumn>
-                      <TableHeaderColumn>Customer Email</TableHeaderColumn>
+                      <TableHeaderColumn>Item Name</TableHeaderColumn>
+                      <TableHeaderColumn>Item Quantity</TableHeaderColumn>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {this.state.tickets.map((ticket, index) => {
+                    {this.state.orders.filter(order => order.restaurant_name === this.state.selectedRest).map((order, index) => {
                         return(
-                          <TableRow key={ticket.restaurant_name} selected={this.selected}>
-                            <TableRowColumn>{ticket.order_num}</TableRowColumn>
-                            <TableRowColumn>{ticket.order_date}</TableRowColumn>
-                            <TableRowColumn>{ticket.email}</TableRowColumn>
+                          <TableRow key={order.restaurant_name} selected={this.selected}>
+                            <TableRowColumn>{order.order_num}</TableRowColumn>
+                            <TableRowColumn>{order.item_name}</TableRowColumn>
+                            <TableRowColumn>{order.item_quantity}</TableRowColumn>
                           </TableRow>
                         )
                     })}
@@ -296,11 +318,6 @@ export default class Owner extends Component{
                   </TableBody>
               </Table>
             </div>
-          </div>
-
-
-
-          <div className='FormRow'>
             <div className = "FormBox">
               <h2>Mark Ticket as Picked Up</h2>
               <SelectField floatingLabelText="Order number: " floatingLabelFixed={true}
@@ -313,9 +330,6 @@ export default class Owner extends Component{
               <RaisedButton label="Complete" primary={true} onClick={this.deleteTicket}/>
             </div>
           </div>
-
-
-
 
       <h2>Manage Restaurants</h2>
         <div className='FormRow'>
