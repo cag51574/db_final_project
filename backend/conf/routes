@@ -30,8 +30,8 @@ GET /ingredient/new/:restaurant_name/:item_name/:ingredient_name/:quantity/:unit
 
 GET /order  controllers.OrderController.all
 GET /order/:restaurant_name controllers.OrderController.byRestaurant(restaurant_name)
-GET /order/new/:order_num/:auth_token controller.OrderController.new_item(order_num, auth_token)
+GET /order/new/:order_num/:restaurant_name/:item_name controllers.OrderController.new_item(order_num, restaurant_name, item_name)
 
 GET /ticket controllers.TicketController.all
 GET /ticket/:restaurant_name controllers.TicketController.byRestaurant(restaurant_name)
-GET /ticket/new/:order_num/:restaurant_name/:item_name controllers.TicketController.new_item(order_num, restaurant_name, item_name)
+GET /ticket/new/:order_num/:auth_token controllers.TicketController.new_item(order_num, auth_token)

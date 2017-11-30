@@ -67,7 +67,7 @@ export default class Customer extends Component{
     this.setState({
       selectedRest: value,
       orders: orders
-    );
+    });
   }
 
   //select menu items
