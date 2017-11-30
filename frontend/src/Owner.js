@@ -6,6 +6,10 @@ import {RaisedButton, TextField, SelectField, MenuItem,Table,TableRowColumn,Tabl
 
 export default class Owner extends Component{
   componentDidMount() {
+    this.retrieveData();
+  }
+
+  retrieveData = () => {
     //get current restaurant data
     fetch("http://localhost:9000/restaurant")
       .then(response => {
@@ -48,7 +52,7 @@ export default class Owner extends Component{
         console.warn('ERROR');
     });
 
-    /*fetch("http://localhost:9000/order")
+    fetch("http://localhost:9000/order")
       .then(response => {
         //do something with response
         response.json().then(orders => {
@@ -68,115 +72,67 @@ export default class Owner extends Component{
       })
       .catch(err => {
         console.warn('ERROR');
-    });*/
+    });
   }
 
   //create restaurant
   createRestaurant = () => {
     var url = this.state.urlHeader + 'restaurant/new/' + this.state.newRestName + '/' + this.state.newRestLoc + '/' + this.state.newRestPhone + '/' + this.props.auth_token;
-    fetch(url)
-      .then(response => {
-        //do something with response
-        response.json().then(ingredients => {
-        });
-      })
-      .catch(err => {
-        console.warn('ERROR');
-    });
+    fetch(url);
+    this.retrieveData();
   }
 
   //add inventory
   createInventoryItem = () => {
-    var url = this.state.urlHeader + 'inventory/new/' + this.state.selectedRest + '/' + this.state.newInventoryName + '/' + this.state.newInventoryQuantity + '/' + this.state.selectedUnit;
-    fetch(url)
-      .catch(err => {
-        console.warn('ERROR');
-    });
+    var url = this.state.urlHeader + 'inventory/new/' + this.state.newInventoryName + '/' + this.state.selectedRest + '/' + this.state.newInventoryQuantity + '/' + this.state.selectedUnit;
+    fetch(url);
+    this.retrieveData();
   }
 
   //createMenuItem
   createMenuItem = () => {
     var url = this.state.urlHeader + 'menu/new/' + this.state.newItemName + '/' + this.state.selectedRest + '/' + this.state.newItemPrice;
-    fetch(url)
-      .catch(err => {
-        console.warn('ERROR');
-    });
+    fetch(url);
+    this.retrieveData();
   }
 
   //add Ingredient for menu item
   addIngredient = () => {
     var url = this.state.urlHeader + 'ingredient/new/' + this.state.selectedRest + '/' + this.state.selectedItemName + '/' + this.state.selectedIngredient + '/' + this.state.newIngredientPortion;
-    fetch(url)
-      .catch(err => {
-        console.warn('ERROR');
-    });
+    fetch(url);
+    this.retrieveData();
   }
 
   //delete restaurant
   deleteRestaurant = () =>{
     var url = this.state.urlHeader + 'restaurant/delete/' + this.state.selectedRest;
-    fetch(url)
-      .then(response => {
-        //do something with response
-        response.json().then(ingredients => {
-        });
-      })
-      .catch(err => {
-        console.warn('ERROR');
-    });
+    fetch(url);
+    this.retrieveData();
   }
 
   //delete restaurant
   deleteInventoryItem = () =>{
     var url = this.state.urlHeader + 'restaurant/delete/' + this.state.selectedRest + '/' + this.state.selectedInventory;
-    fetch(url)
-      .then(response => {
-        //do something with response
-        response.json().then(ingredients => {
-        });
-      })
-      .catch(err => {
-        console.warn('ERROR');
-    });
+    fetch(url);
+    this.retrieveData();
   }
 
   deleteMenuItem = () => {
     var url = this.state.urlHeader + 'menu/delete/' + this.state.selectedRest + '/' + this.state.selectedItemName;
-    fetch(url)
-      .then(response => {
-        //do something with response
-        response.json().then(ingredients => {
-        });
-      })
-      .catch(err => {
-        console.warn('ERROR');
-    });
+    fetch(url);
+    this.retrieveData();
   }
 
   deleteIngredient = () => {
     var url = this.state.urlHeader + 'ingredient/delete/' + this.state.selectedRest + '/' + this.state.selectedItemName + '/' + this.state.selectedIngredient;
-    fetch(url)
-      .then(response => {
-        //do something with response
-        response.json().then(ingredients => {
-        });
-      })
-      .catch(err => {
-        console.warn('ERROR');
-    });
+    fetch(url);
+    this.retrieveData();
   }
 
   deleteTicket = () => {
     var url = this.state.urlHeader + 'ticket/delete/' + this.state.selectedON;
-    fetch(url)
-      .then(response => {
-        //do something with response
-        response.json().then(ingredients => {
-        });
-      })
-      .catch(err => {
-        console.warn('ERROR');
-    });
+    fetch(url);
+    this.retrieveData();
   }
 
   constructor(props){
@@ -452,12 +408,6 @@ export default class Owner extends Component{
 
           <div className = "DisplayBox">
             <h2>My Inventory</h2>
-            <SelectField floatingLabelText="Filter Restaurant: " floatingLabelFixed={true}
-              value={this.state.selectedRest} onChange={this.selectedRestChange}>
-              {this.state.restaurants.map(restaurant => {
-                  return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
-              })}
-            </SelectField>
             <Table onRowSelection={this.handleRowSelection} height = '300px'>
               <TableHeader>
                   <TableRow>
@@ -468,7 +418,7 @@ export default class Owner extends Component{
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {this.state.inventorys.filter(inventory=>inventory.restaurant_name===this.state.selectedRest || this.state.selectedRest === true).map((inventory) => {
+                  {this.state.inventorys.filter(inventory=>inventory.restaurant_name===this.state.selectedRest).map((inventory) => {
                       return(
                         <TableRow key={inventory.ingredient_name} selected={this.selected}>
                           <TableRowColumn>{inventory.restaurant_name}</TableRowColumn>
@@ -535,7 +485,7 @@ export default class Owner extends Component{
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {this.state.menuItems.map((menuItem) => {
+                  {this.state.menuItems.filter(menuItem=>menuItem.restaurant_name===this.state.selectedRest).map((menuItem) => {
                       return(
                         <TableRow key={menuItem.item_name} selected={this.selected}>
                           <TableRowColumn>{menuItem.restaurant_name}</TableRowColumn>
@@ -625,7 +575,7 @@ export default class Owner extends Component{
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {this.state.ingredients.map((ingredient) => {
+                  {this.state.ingredients.filter(ingredient=>ingredient.restaurant_name===this.state.selectedRest).map((ingredient) => {
                       return(
                         <TableRow key={ingredient.ingredient_name} selected={this.selected}>
                           <TableRowColumn>{ingredient.restaurant_name}</TableRowColumn>
