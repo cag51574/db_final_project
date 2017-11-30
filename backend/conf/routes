@@ -23,3 +23,9 @@ GET /ingredient/:restaurant/:item   controllers.IngredientController.byRestauran
 GET /login/:email/:password                         controllers.SecurityController.login(email, password)
 
 
+POST /inventory/new                 controllers.InventoryController.new_item
+POST /menuItem/new                  controllers.MenuController.new_item
+POST /ingredient/new                controllers.IngredientController.new_ingredient
+POST /restaurant/new                controllers.RestaurantController.new_restaurant
+
+
