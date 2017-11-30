@@ -136,7 +136,7 @@ export default class Owner extends Component{
         restaurant_name : this.selectedRest,
         item_name : this.selectedItemName,
         ingredient_name : this.selectedIngredient,
-        portion : this.newIngredientPortion
+        portion : this.newIngredientPortion,
         unit: this.newIngredientUnit
       }
       .then(
