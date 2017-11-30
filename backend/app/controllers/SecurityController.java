@@ -69,6 +69,18 @@ public class SecurityController extends Controller {
         }
     }
 
+    public Result signup(String email, String password, String full_name) {
+        if (userRepository.findByEmail(email) == null) {
+            User user = userRepository.create(email, password, full_name);
+            String auth_token = user.createToken();
+            ObjectNode auth_token_json = Json.newObject();
+            auth_token_json.put(AUTH_TOKEN, auth_token);
+            return ok(auth_token_json);
+        } else {
+            return badRequest("That user is already taken.");
+        }
+    }
+
     public static class Login {
 
         @Constraints.Required

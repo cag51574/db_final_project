@@ -21,7 +21,7 @@ GET /ingredient                     controllers.IngredientController.all
 GET /ingredient/:restaurant/:item   controllers.IngredientController.byRestaurantAndItem(restaurant, item)
 
 GET /login/:email/:password                         controllers.SecurityController.login(email, password)
-
+GET /signup/:email/:password/:full_name             controllers.SecurityController.signup(email, password, full_name)
 
 POST /inventory/new                 controllers.InventoryController.new_item
 POST /menuItem/new                  controllers.MenuController.new_item

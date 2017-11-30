@@ -27,8 +27,17 @@ export default class Login extends Component {
       .catch(e => this.setState({error: e.message}));
   }
 
-  signup() {
-    
+  signup(email, password, full_name) {
+    fetch("http://localhost:9000/signup/" + email + "/" + password + "/" + full_name)
+      .then(response => {
+        if (response.status === 200) {
+          this.props.onLogin(response.body);
+        } else {
+          this.setState({error: response.statusText});
+        }
+      })
+      .catch(e => this.setState({error: e.message}));
+      
   }
 
 
