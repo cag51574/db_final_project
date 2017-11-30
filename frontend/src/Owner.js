@@ -25,10 +25,7 @@ export default class Owner extends Component{
           this.setState({ inventorys: inventorys });
         });
       })
-      .catch(err => {
-        console.warn('ERROR');
-    });
-
+      .catch(err => console.warn('error'));
     fetch("http://localhost:9000/menu")
       .then(response => {
         //do something with response
