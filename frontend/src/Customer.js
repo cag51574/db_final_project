@@ -80,21 +80,7 @@ export default class Customer extends Component{
   }
 
   placeOrder = () => {
-    fetch("https://localhost:9000/order",{
-      method:'POST',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body:{
-        restaurant_name : this.restList,
-        item_name : this.itemList
-    }})
-    .then(
-      this.setState({
-        finalText: 'Order was completed!'
-      })
-    )
+    console.warn(this.state.restList, this.state.itemList)
   };
 
     render() {
@@ -112,9 +98,13 @@ export default class Customer extends Component{
             <Table onRowSelection={this.handleRowSelection}
               height = '300px'
               multiSelectable = "false"
+              selectable={false}
+
             >
               <TableHeader
                   displaySelectAll = {this.state.displaySelectAll}
+                  displaySelectAll={true}
+                  adjustForCheckbox={true}
               >
                   <TableRow>
                     <TableHeaderColumn>Restaurant Name</TableHeaderColumn>
