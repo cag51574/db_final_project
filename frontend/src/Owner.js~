@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom';
 import './Global.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {RaisedButton, TextField, SelectField, MenuItem,Table,TableRowColumn,TableHeaderColumn,TableBody,TableHeader,TableRow} from 'material-ui';
@@ -89,7 +89,7 @@ export default class Owner extends Component{
   }
   //create restaurant
   createRestaurant() {
-    fetch("https://localhost:9000/restaurant/new"),{
+    fetch("https://localhost:9000/restaurants/new"),{
       method:'POST',
       headers:{
         'Accept': 'application/json',
@@ -148,7 +148,7 @@ export default class Owner extends Component{
 
   //add Ingredient for menu item
   addIngredient() {
-    fetch("https://localhost:9000/ingredient/new"),{
+    fetch("https://localhost:9000/menuItem/new"),{
       method:'POST',
       headers:{
         'Accept': 'application/json',
@@ -266,7 +266,7 @@ export default class Owner extends Component{
         </SelectField>
           <div className='FormRow'>
 
-            <div className = "FormBox">
+            <div className = "DisplayBox">
               <h2>Current Orders</h2>
               <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
                 value={this.state.selectedRest} onChange={this.selectedRestChange}>
