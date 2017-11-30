@@ -15,46 +15,43 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 // Our Imports
-import repository.TicketRepository;
-import repository.UserRepository;
-import models.User;
+import repository.OrderRepository;
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
  */
-public class TicketController extends Controller {
+public class OrderController extends Controller {
 
-    private final TicketRepository ticketRepository;
-    private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
     private final HttpExecutionContext httpExecutionContext;
 
     @Inject
-    public TicketController(TicketRepository ticketRepository,
-                            UserRepository userRepository,
+    public OrderController(OrderRepository orderRepository,
                           HttpExecutionContext httpExecutionContext) {
-        this.ticketRepository = ticketRepository;
-        this.userRepository = userRepository;
+        this.orderRepository = orderRepository;
         this.httpExecutionContext = httpExecutionContext;
     }
 
 
     public Result all() {
-        return ok(Json.toJson(ticketRepository.all()));
+        return ok(Json.toJson(orderRepository.all()));
     }
 
     public Result byRestaurant(String name) {
-        return ok(Json.toJson(ticketRepository.byRestaurant(name)));
+        return ok(Json.toJson(orderRepository.byRestaurant(name)));
     }
 
-    public Result new_item(String order_num, String auth_token) {
+    public Result new_item(String order_num, String restaurant_name, String item_name) {
         if (order_num == null) {
+            return badRequest("Missing order number.");
+        }
+        if (restaurant_name == null) {
             return badRequest("Missing email.");
         }
-        if (auth_token == null) {
+        if (item_name == null) {
             return badRequest("Missing date.");
         }
-        User user = userRepository.findByAuthToken(auth_token);
-        ticketRepository.new_item(Integer.parseInt(order_num), user.email, new Date());
+        orderRepository.new_item(Integer.parseInt(order_num), restaurant_name, item_name, 1);
         return ok();
     }
 
@@ -70,7 +67,7 @@ public class TicketController extends Controller {
     }
 
     public CompletionStage<Result> inventories() {
-        return ticketRepository.all().thenApplyAsync(list -> ok(Json.toJson(list)), httpExecutionContext.current());
+        return orderRepository.all().thenApplyAsync(list -> ok(Json.toJson(list)), httpExecutionContext.current());
     }
     */
     /**
