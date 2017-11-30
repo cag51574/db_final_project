@@ -7,7 +7,7 @@ import {RaisedButton, TextField, SelectField, MenuItem,Table,TableRowColumn,Tabl
 export default class Owner extends Component{
   componentDidMount() {
     //get current restaurant data
-    fetch("http://localhost:9000/restaurants")
+    fetch("http://localhost:9000/restaurant")
       .then(response => {
         //do something with response
         response.json().then( restaurants => {
@@ -18,10 +18,10 @@ export default class Owner extends Component{
         console.warn('ERROR');
     });
     //get current inventory data
-    fetch("http://localhost:9000/inventorys")
+    fetch("http://localhost:9000/inventory")
       .then(response => {
         //do something with response
-        response.json().then(inventorys => {
+        response.json().then( inventorys => {
           this.setState({ inventorys: inventorys });
         });
       })
@@ -29,7 +29,7 @@ export default class Owner extends Component{
         console.warn('ERROR');
     });
 
-    fetch("http://localhost:9000/menus")
+    fetch("http://localhost:9000/menu")
       .then(response => {
         //do something with response
         response.json().then(menuItems => {
@@ -40,7 +40,7 @@ export default class Owner extends Component{
         console.warn('ERROR');
     });
 
-    fetch("http://localhost:9000/ingredients")
+    fetch("http://localhost:9000/ingredient")
       .then(response => {
         //do something with response
         response.json().then(ingredients => {
@@ -50,6 +50,28 @@ export default class Owner extends Component{
       .catch(err => {
         console.warn('ERROR');
     });
+
+    /*fetch("http://localhost:9000/order")
+      .then(response => {
+        //do something with response
+        response.json().then(orders => {
+          this.setState({ orders: orders });
+        });
+      })
+      .catch(err => {
+        console.warn('ERROR');
+    });
+
+    fetch("http://localhost:9000/ticket")
+      .then(response => {
+        //do something with response
+        response.json().then(tickets => {
+          this.setState({ tickets: tickets });
+        });
+      })
+      .catch(err => {
+        console.warn('ERROR');
+    });*/
   }
 
 
@@ -167,7 +189,9 @@ export default class Owner extends Component{
         menuItems:[],
         ingredients:[],
         selected: [],
-        selectedRest: 1,
+        orders: [],
+        tickets: [],
+        selectedRest: true
       };
       this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -229,16 +253,88 @@ export default class Owner extends Component{
   render() {
     return(
       <MuiThemeProvider>
-      <div>{this.state.selectedRest}</div>
-      <div>
-        {this.state ? JSON.stringify(this.state.restaurants) : "No State Yet."}
-      </div>
-      <p>break</p>
-      <div>
-        {this.state.restaurants.map(restaurant => restaurant.restaurant_name)}
-      </div>
       <div className="DocBody">
-        <h1>Owner Homepage</h1>
+        <h1 className='Header'>Owner Homepage</h1>
+
+
+        <h2>Current Orders</h2>
+        <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
+          value={this.state.selectedRest} onChange={this.selectedRestChange}>
+          {this.state.restaurants.map(restaurant => {
+              return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
+          })}
+        </SelectField>
+          <div className='FormRow'>
+
+            <div className = "FormBox">
+              <h2>Current Orders</h2>
+              <SelectField floatingLabelText="Restaurant Name: " floatingLabelFixed={true}
+                value={this.state.selectedRest} onChange={this.selectedRestChange}>
+                {this.state.restaurants.map(restaurant => {
+                    return(<MenuItem value={restaurant.restaurant_name} primaryText={restaurant.restaurant_name}/>)
+                })}
+              </SelectField>
+              <Table onRowSelection={this.handleRowSelection} height = '300px'>
+                <TableHeader>
+                    <TableRow>
+                      <TableHeaderColumn>Order Number</TableHeaderColumn>
+                      <TableHeaderColumn>Item Name</TableHeaderColumn>
+                      <TableHeaderColumn>Item Quantity</TableHeaderColumn>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {this.state.orders.filter(order=>order.restaurant_name===this.state.selectedRest).map((order, index) => {
+                        return(
+                          <TableRow key={order.restaurant_name} selected={this.selected}>
+                            <TableRowColumn>{order.order_num}</TableRowColumn>
+                            <TableRowColumn>{order.item_name}</TableRowColumn>
+                            <TableRowColumn>{order.item_quantity}</TableRowColumn>
+                          </TableRow>
+                        )
+                    })}
+                  </TableBody>
+              </Table>
+            </div>
+          </div>
+
+
+
+          <div className='FormRow'>
+            <div className = "FormBox">
+              <h2>Mark Ticket as Picked Up</h2>
+              <br/>
+              <RaisedButton label="Complete" primary={true} onClick={this.deleteTicket}/>
+            </div>
+
+            <div className = "DisplayBox">
+              <h2>Current Tickets For PickUp</h2>
+              <Table onRowSelection={this.handleRowSelection} height = '300px'>
+                <TableHeader>
+                    <TableRow>
+                      <TableHeaderColumn>Order Number</TableHeaderColumn>
+                      <TableHeaderColumn>Order Date</TableHeaderColumn>
+                      <TableHeaderColumn>Customer Email</TableHeaderColumn>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {this.state.tickets.filter(ticket=>ticket.restaurant_name===this.state.selectedRest).map((ticket, index) => {
+                        return(
+                          <TableRow key={ticket.restaurant_name} selected={this.selected}>
+                            <TableRowColumn>{ticket.order_num}</TableRowColumn>
+                            <TableRowColumn>{ticket.item_name}</TableRowColumn>
+                            <TableRowColumn>{ticket.item_quantity}</TableRowColumn>
+                          </TableRow>
+                        )
+                    })}
+                  </TableBody>
+              </Table>
+            </div>
+
+          </div>
+
+
+
+
       <h2>Manage Restaurants</h2>
         <div className='FormRow'>
           <div className = "FormBox">
@@ -253,9 +349,6 @@ export default class Owner extends Component{
               <TextField floatingLabelText="Restaurant Phone Number: " floatingLabelFixed={true}
                 onChange={this.handleChange} name="newRestPhone"/>
               <br/>
-              <TextField floatingLabelText="Owner's Name: " floatingLabelFixed={true}
-                onChange={this.handleChange} name="newRestOName"/>
-              <br/>
               <RaisedButton type='submit' label="Submit" primary={true}/>
             </form>
           </div>
@@ -267,8 +360,8 @@ export default class Owner extends Component{
               <TableHeader>
                   <TableRow>
                     <TableHeaderColumn>Restaurant Name</TableHeaderColumn>
-                    <TableHeaderColumn>Reastaurant Phone</TableHeaderColumn>
-                    <TableHeaderColumn>Owner Name</TableHeaderColumn>
+                    <TableHeaderColumn>Restaurant Location</TableHeaderColumn>
+                    <TableHeaderColumn>Restaurant Phone</TableHeaderColumn>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -276,8 +369,8 @@ export default class Owner extends Component{
                       return(
                         <TableRow key={restaurant.restaurant_name} selected={this.selected}>
                           <TableRowColumn>{restaurant.restaurant_name}</TableRowColumn>
+                          <TableRowColumn>{restaurant.location}</TableRowColumn>
                           <TableRowColumn>{restaurant.restaurant_phone}</TableRowColumn>
-                          <TableRowColumn>{restaurant.restaurant_owner}</TableRowColumn>
                         </TableRow>
                       )
                   })}
@@ -299,7 +392,7 @@ export default class Owner extends Component{
         </div>
 
 
-        //inventory
+      <h2>Manage Inventory</h2>
         <div className='FormRow'>
           <div className = "FormBox">
             <h2>Add Inventory Item</h2>
@@ -342,13 +435,14 @@ export default class Owner extends Component{
             <Table onRowSelection={this.handleRowSelection} height = '300px'>
               <TableHeader>
                   <TableRow>
+                    <TableHeaderColumn>Restaurant Name</TableHeaderColumn>
                     <TableHeaderColumn>Ingredient Name</TableHeaderColumn>
                     <TableHeaderColumn>Quantity</TableHeaderColumn>
                     <TableHeaderColumn>Unit</TableHeaderColumn>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {this.state.inventorys.map((inventory) => {
+                  {this.state.inventorys.filter(inventory=>inventory.restaurant_name===this.state.selectedRest || this.state.selectedRest === true).map((inventory) => {
                       return(
                         <TableRow key={inventory.ingredient_name} selected={this.selected}>
                           <TableRowColumn>{inventory.restaurant_name}</TableRowColumn>
@@ -381,7 +475,7 @@ export default class Owner extends Component{
           </div>
         </div>
 
-        //menuItem
+      <h2>Manage Menus</h2>
         <div className="FormRow">
 
           <div className = "FormBox">
@@ -419,7 +513,7 @@ export default class Owner extends Component{
                       return(
                         <TableRow key={menuItem.item_name} selected={this.selected}>
                           <TableRowColumn>{menuItem.restaurant_name}</TableRowColumn>
-                          <TableRowColumn>{menuItem.menu_item}</TableRowColumn>
+                          <TableRowColumn>{menuItem.item_name}</TableRowColumn>
                           <TableRowColumn>{menuItem.price}</TableRowColumn>
                         </TableRow>
                       )
@@ -448,7 +542,7 @@ export default class Owner extends Component{
           </div>
         </div>
 
-        //ingredients
+      <h2>Manage Recipe</h2>
         <div className='FormRow'>
           <div className = "FormBox">
             <h2>Add Menu Item Ingredient</h2>
@@ -495,22 +589,26 @@ export default class Owner extends Component{
           </div>
 
           <div className = "DisplayBox">
-            <h2>My Restaurants</h2>
+            <h2>Display Item Ingredients</h2>
             <Table onRowSelection={this.handleRowSelection} height = '300px'>
               <TableHeader>
                   <TableRow>
+                    <TableHeaderColumn>Restaurant Name</TableHeaderColumn>
+                    <TableHeaderColumn>Item Name</TableHeaderColumn>
                     <TableHeaderColumn>Ingredient Name</TableHeaderColumn>
                     <TableHeaderColumn>Quantity</TableHeaderColumn>
                     <TableHeaderColumn>Unit</TableHeaderColumn>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {this.state.restaurants.map((restaurant) => {
+                  {this.state.ingredients.map((ingredient) => {
                       return(
-                        <TableRow key={restaurant.restaurant_name} selected={this.selected}>
-                          <TableRowColumn>{restaurant.restaurant_name}</TableRowColumn>
-                          <TableRowColumn>{restaurant.restaurant_phone}</TableRowColumn>
-                          <TableRowColumn>{restaurant.restaurant_phone}</TableRowColumn>
+                        <TableRow key={ingredient.ingredient_name} selected={this.selected}>
+                          <TableRowColumn>{ingredient.restaurant_name}</TableRowColumn>
+                          <TableRowColumn>{ingredient.item_name}</TableRowColumn>
+                          <TableRowColumn>{ingredient.ingredient_name}</TableRowColumn>
+                          <TableRowColumn>{ingredient.portion}</TableRowColumn>
+                          <TableRowColumn>{ingredient.unit}</TableRowColumn>
                         </TableRow>
                       )
                   })}

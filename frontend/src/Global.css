@@ -30,3 +30,9 @@ body {
   display: table;
   width: 1200;
 }
+.Header{
+  border-bottom: 2px solid black;
+}
+h2{
+  color:grey;
+}
