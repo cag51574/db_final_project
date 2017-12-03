@@ -15,6 +15,9 @@ Colin Wahl
 
 Vivek Patel
 
+
+## Dr. Miller didn't suggest any changes to our presentation, so we have not added an updated presentation file.
+
 ## Running the project
 
 To run the front end:
