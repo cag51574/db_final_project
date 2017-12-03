@@ -15,6 +15,14 @@ Colin Wahl
 
 Vivek Patel
 
+## Running the project
+
+To run the front end, navigate to the frontend directory and follow the instructions in the README in that directory.
+
+To run the back end, navigate to the backend directory and follow the instructions in the README in that directory.
+
+
+
 ## Project Requirements
   1. Explain the UML diagram used. [10]
   2. Convert the UML class diagram to the relational model. [10]
