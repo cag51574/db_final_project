@@ -17,25 +17,18 @@ Vivek Patel
 
 ## Running the project
 
-To run the front end, navigate to the frontend directory and follow the instructions in the README in that directory.
+To run the front end:
+0) Install NPM and Node.
+1) Navigate to `./frontend`.
+2) Run `npm install`.
+3) Run `npm start` to start the local frontend server.  It will be at `localhost:3000`.
+4) Open `localhost:3000`.
 
-To run the back end, navigate to the backend directory and follow the instructions in the README in that directory.
-
-
-
-## Project Requirements
-  1. Explain the UML diagram used. [10]
-  2. Convert the UML class diagram to the relational model. [10]
-  3. Use BCNF decomposition algorithm. [10]
-  4. Use 3NF synthesis algorithm. [10]
-  5. Compare the models at steps 2, 3and 4. [10]
-  6. Show a schema.sql filethat generates the schema for the project. [10]
-  7. Show inserts.sql file to populate the schema. [10]
-  8. Discuss the system architecture and components used in the project. [10]
-  9. A demonstration of the project in class. [20]
-  
-## Things our app is supposed to do:
-1. Create a restaurant
-2. Order from a restaurant
-3. View orders to your restaurant
-4. View your restaurant's inventory
+To run the back end:
+0) Create a postgresql database called `db_final_project`.
+1) Navigate to `./backend`.
+2) Download the configuration file found at https://gist.github.com/colinwahl/2f118bdeace58c77276d77851d030f6b and place it in `./backend/conf/application.conf`.
+3) Edit `application.conf` to use your db username, password, and db name. This is found near the bottom of said file.
+4) Run `sbt run` or `sbt.bat run` to run the application. 
+5) Navigate to `localhost:9000` and make sure the database is connected.  Run the database evolutions.
+6) Now the backend should be running.  Now go back to `localhost:3000` and use the frontend to interact with the app.
